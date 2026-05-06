@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>正在跳转到 Coze Agent...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 60px 80px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .jump-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .jump-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .jump-button:active {
+            transform: translateY(0);
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .tip {
+            margin-top: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* 加载动画 */
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading .loader {
+            display: block;
+        }
+
+        .loading .jump-button {
+            display: none;
+        }
+
+        /* 微信提示遮罩 */
+        .wechat-mask {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .wechat-mask.show {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+        }
+
+        .wechat-tip {
+            color: white;
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: right;
+            margin-top: 20px;
+            padding-right: 10px;
+        }
+
+        .wechat-tip .arrow {
+            font-size: 40px;
+            display: block;
+            margin-bottom: -10px;
+        }
+
+        .wechat-tip .step {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .wechat-tip .step strong {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <h1>🚀 Coze Agent</h1>
+        <button class="jump-button" id="jumpBtn">
+            <span class="icon">🔗</span>点击访问 Coze Agent
+        </button>
+        <div class="loader"></div>
+        <p class="tip" id="tipText">正在准备跳转...</p>
+    </div>
+
+    <!-- 微信提示遮罩 -->
+    <div class="wechat-mask" id="wechatMask">
+        <div class="wechat-tip">
+            <span class="arrow">↗️</span>
+            <div class="step">
+                <strong>第一步：</strong>点击右上角 <strong>"···"</strong> 菜单
+            </div>
+            <div class="step">
+                <strong>第二步：</strong>选择 <strong>"在浏览器打开"</strong>
+            </div>
+            <div class="step">
+                即可在外部浏览器中访问 Coze Agent
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var targetUrl = 'https://www.coze.cn/store/agent/7629304877159727140?bot_id=true&bid=6jslmoac02g1j';
+        
+        var jumpBtn = document.getElementById('jumpBtn');
+        var tipText = document.getElementById('tipText');
+        var wechatMask = document.getElementById('wechatMask');
+        var container = document.getElementById('container');
+        
+        // 检测环境
+        function isWeChat() {
+            var ua = navigator.userAgent.toLowerCase();
+            return ua.indexOf('micromessenger') !== -1;
+        }
+        
+        function isAndroid() {
+            return /android/i.test(navigator.userAgent);
+        }
+        
+        function isIOS() {
+            return /iphone|ipad|ipod/i.test(navigator.userAgent);
+        }
+        
+        function isMobile() {
+            return /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent);
+        }
+        
+        // 方法1: 尝试使用 window.open (可能在桌面微信有效)
+        function tryWindowOpen() {
+            try {
+                var newWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
+                if (newWindow) {
+                    console.log('window.open succeeded');
+                    return true;
+                }
+            } catch(e) {
+                console.log('window.open failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法2: Android Intent Scheme (尝试启动外部浏览器)
+        function tryAndroidIntent() {
+            if (!isAndroid()) return false;
+            
+            try {
+                // 尝试多个intent格式
+                var intents = [
+                    'intent://coze.cn/store/agent/7629304877159727140?bot_id=true&bid=6jslmoac02g1j#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https://www.coze.cn/store/agent/7629304877159727140?bot_id=true&bid=6jslmoac02g1j;end',
+                    'intent://www.coze.cn/store/agent/7629304877159727140?bot_id=true&bid=6jslmoac02g1j#Intent;scheme=https;action=android.intent.action.VIEW;end',
+                    'intent://coze.cn#Intent;scheme=https;package=com.tencent.mtt;end' // 尝试QQ浏览器
+                ];
+                
+                for (var i = 0; i < intents.length; i++) {
+                    setTimeout(function(intentUrl) {
+                        return function() {
+                            document.location = intentUrl;
+                        };
+                    }(intents[i]), i * 100);
+                }
+                return true;
+            } catch(e) {
+                console.log('Android intent failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法3: 创建并自动点击链接
+        function tryLinkClick() {
+            try {
+                var link = document.createElement('a');
+                link.href = targetUrl;
+                link.target = '_blank';
+                link.rel = 'noopener,noreferrer';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log('Link click triggered');
+                return true;
+            } catch(e) {
+                console.log('Link click failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法4: 使用 iframe 尝试加载 (可能触发下载或外部打开)
+        function tryIframe() {
+            try {
+                var iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = targetUrl;
+                document.body.appendChild(iframe);
+                
+                setTimeout(function() {
+                    if (iframe.parentNode) {
+                        document.body.removeChild(iframe);
+                    }
+                }, 2000);
+                console.log('Iframe loaded');
+                return true;
+            } catch(e) {
+                console.log('Iframe failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法5: 直接修改 location (最基础的方法)
+        function tryLocationRedirect() {
+            try {
+                window.location.href = targetUrl;
+                return true;
+            } catch(e) {
+                console.log('Location redirect failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法6: 使用 replace (不保留历史记录)
+        function tryLocationReplace() {
+            try {
+                window.location.replace(targetUrl);
+                return true;
+            } catch(e) {
+                console.log('Location replace failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法7: 创建一个表单并自动提交 (POST请求可能触发不同行为)
+        function tryFormSubmit() {
+            try {
+                var form = document.createElement('form');
+                form.action = targetUrl;
+                form.target = '_blank';
+                form.method = 'GET';
+                form.style.display = 'none';
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+                console.log('Form submitted');
+                return true;
+            } catch(e) {
+                console.log('Form submit failed:', e);
+            }
+            return false;
+        }
+        
+        // 方法8: 尝试打开一个"下载" (有时微信会提示用外部浏览器打开)
+        function tryDownloadTrigger() {
+            try {
+                var link = document.createElement('a');
+                link.href = targetUrl;
+                link.download = '';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log('Download trigger activated');
+                return true;
+            } catch(e) {
+                console.log('Download trigger failed:', e);
+            }
+            return false;
+        }
+        
+        // 主跳转函数 - 依次尝试所有方法
+        function openExternalBrowser() {
+            var isWechat = isWeChat();
+            var redirectAttempted = false;
+            
+            if (isWechat) {
+                tipText.innerText = '检测到微信浏览器，正在尝试打开外部浏览器...';
+            } else {
+                tipText.innerText = '正在跳转到浏览器...';
+            }
+            
+            // 显示加载动画
+            container.classList.add('loading');
+            
+            // 依次尝试各种方法
+            var methods = [
+                function() { return tryWindowOpen(); },
+                function() { return tryLinkClick(); },
+                function() { return tryFormSubmit(); },
+                function() { return tryIframe(); },
+                function() { return tryDownloadTrigger(); },
+                function() { return tryLocationRedirect(); },
+                function() { return tryLocationReplace(); }
+            ];
+            
+            // 如果是Android，优先尝试intent
+            if (isAndroid() && isWechat) {
+                methods.unshift(function() { return tryAndroidIntent(); });
+            }
+            
+            // 依次执行所有方法
+            methods.forEach(function(method, index) {
+                setTimeout(function() {
+                    if (!redirectAttempted) {
+                        var result = method();
+                        console.log('Method ' + index + ' result:', result);
+                        
+                        // 检查是否成功跳转
+                        setTimeout(function() {
+                            if (document.visibilityState === 'hidden') {
+                                redirectAttempted = true;
+                                console.log('Redirect likely succeeded');
+                            }
+                        }, 100);
+                    }
+                }, index * 200);
+            });
+            
+            // 如果2秒后仍在当前页面，说明所有方法都失败了
+            setTimeout(function() {
+                if (!redirectAttempted && document.visibilityState !== 'hidden') {
+                    container.classList.remove('loading');
+                    jumpBtn.style.display = 'inline-block';
+                    
+                    if (isWechat) {
+                        tipText.innerText = '自动跳转失败，请手动操作';
+                        wechatMask.classList.add('show');
+                    } else {
+                        tipText.innerText = '跳转失败，请点击按钮重试';
+                    }
+                }
+            }, 2500);
+        }
+        
+        // 页面加载完成后自动尝试跳转
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', function() {
+                setTimeout(openExternalBrowser, 300);
+            });
+        } else {
+            setTimeout(openExternalBrowser, 300);
+        }
+        
+        // 按钮点击事件（作为备用）
+        jumpBtn.addEventListener('click', function() {
+            openExternalBrowser();
+        });
+        
+        // 点击遮罩关闭
+        wechatMask.addEventListener('click', function() {
+            wechatMask.classList.remove('show');
+        });
+        
+        // 监听页面可见性变化
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                console.log('Page hidden - redirect likely succeeded');
+            }
+        });
+    </script>
+</body>
+</html>

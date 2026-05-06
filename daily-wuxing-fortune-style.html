@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>今日五行运势与穿搭 · Daily Wuxing Style</title>
+  <style>
+    :root {
+      --bg: #f7f1ea;
+      --bg-soft: #fbf7f1;
+      --ink: #2f2730;
+      --muted: #7a6f75;
+      --line: rgba(90, 74, 87, 0.16);
+      --purple: #6f5a7e;
+      --purple-deep: #44334e;
+      --gold: #b89a62;
+      --cream: #fffaf2;
+      --shadow: 0 24px 70px rgba(63, 46, 67, 0.14);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --wood: #7fa484;
+      --fire: #b66a65;
+      --earth: #b89a62;
+      --metal: #d7d2c8;
+      --water: #53677e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 10%, rgba(170, 133, 189, 0.28), transparent 33%),
+        radial-gradient(circle at 78% 18%, rgba(214, 188, 129, 0.22), transparent 30%),
+        linear-gradient(135deg, #f6eee6 0%, #efe5f2 50%, #f8f0e4 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.45) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.42) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.42), transparent 70%);
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 72px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 18px;
+      margin-bottom: 34px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, 0.56);
+      backdrop-filter: blur(18px);
+      border-radius: 999px;
+      box-shadow: 0 12px 40px rgba(82, 61, 84, 0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--cream);
+      background: conic-gradient(from 220deg, #58415e, #ab8eb9, #d1b574, #6f5a7e, #58415e);
+      box-shadow: inset 0 0 12px rgba(255,255,255,0.32);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--purple-deep);
+      background: rgba(255,255,255,0.55);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .today-card,
+    .panel,
+    .mini-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, 0.66);
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      min-height: 620px;
+      position: relative;
+      padding: 54px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -110px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(111, 90, 126, 0.22), transparent 68%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border: 1px solid rgba(184, 154, 98, 0.38);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.45);
+      color: #7c6341;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 28px 0 18px;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+      font-weight: 800;
+      color: var(--purple-deep);
+    }
+
+    .lead {
+      max-width: 620px;
+      font-size: 18px;
+      line-height: 1.9;
+      color: #5d515b;
+      margin: 0 0 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin: 32px 0 42px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      color: #fffaf2;
+      background: linear-gradient(135deg, #44334e, #7a6088);
+      box-shadow: 0 16px 34px rgba(68, 51, 78, 0.24);
+    }
+
+    .btn-secondary {
+      color: var(--purple-deep);
+      background: rgba(255,255,255,0.64);
+      border: 1px solid var(--line);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .date-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 620px;
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(111,90,126,0.12);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .metric strong {
+      font-size: 22px;
+      color: var(--purple-deep);
+    }
+
+    .orbital {
+      position: absolute;
+      right: 42px;
+      bottom: 34px;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      border: 1px solid rgba(111,90,126,0.18);
+      display: grid;
+      place-items: center;
+      opacity: 0.95;
+    }
+
+    .orbital::before,
+    .orbital::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(184,154,98,0.26);
+    }
+
+    .orbital::before {
+      inset: 32px;
+    }
+
+    .orbital::after {
+      inset: 68px;
+      background: radial-gradient(circle, rgba(184,154,98,0.18), transparent 68%);
+    }
+
+    .element-dot {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(49, 36, 52, 0.18);
+    }
+
+    .dot-wood { background: var(--wood); top: 10px; left: 98px; }
+    .dot-fire { background: var(--fire); top: 72px; right: 0; }
+    .dot-earth { background: var(--earth); bottom: 20px; right: 34px; }
+    .dot-metal { background: #b8b1a5; bottom: 20px; left: 34px; }
+    .dot-water { background: var(--water); top: 72px; left: 0; }
+
+    .today-card {
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      position: relative;
+      overflow: hidden;
+      min-height: 620px;
+    }
+
+    .today-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 80% 10%, var(--daily-glow, rgba(111,90,126,0.16)), transparent 36%),
+        linear-gradient(180deg, rgba(255,255,255,0.36), transparent);
+      pointer-events: none;
+    }
+
+    .today-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .date-control {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      padding: 9px 10px 9px 14px;
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    .tiny-btn {
+      white-space: nowrap;
+      border: 0;
+      color: #fffaf2;
+      background: var(--purple-deep);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .today-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .today-title {
+      margin: 0;
+      font-size: 28px;
+      color: var(--purple-deep);
+      letter-spacing: -0.03em;
+    }
+
+    .score-ring {
+      width: 104px;
+      height: 104px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        conic-gradient(var(--daily-color) calc(var(--score) * 1%), rgba(255,255,255,0.65) 0),
+        rgba(255,255,255,0.52);
+      box-shadow: inset 0 0 0 10px rgba(255,250,242,0.86);
+    }
+
+    .score-ring strong {
+      font-size: 30px;
+      color: var(--purple-deep);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 18px 0 24px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(111,90,126,0.12);
+      font-size: 13px;
+      color: #665a62;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 16px;
+      color: var(--purple-deep);
+      letter-spacing: 0.03em;
+    }
+
+    .fortune-copy {
+      margin: 0 0 22px;
+      padding: 18px;
+      line-height: 1.85;
+      color: #5d515b;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(111,90,126,0.12);
+      border-radius: 22px;
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 0 0 24px;
+    }
+
+    .swatch {
+      min-height: 96px;
+      border-radius: 20px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.36);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .swatch::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+    }
+
+    .swatch span,
+    .swatch strong {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.22);
+    }
+
+    .swatch span {
+      font-size: 12px;
+      opacity: 0.86;
+    }
+
+    .swatch strong {
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .outfit {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .outfit-card {
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,0.48);
+      border: 1px solid rgba(111,90,126,0.12);
+    }
+
+    .outfit-card strong {
+      display: block;
+      color: var(--purple-deep);
+      margin-bottom: 7px;
+      font-size: 15px;
+    }
+
+    .outfit-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      padding: 34px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      color: var(--purple-deep);
+      font-size: clamp(26px, 3vw, 42px);
+      letter-spacing: -0.045em;
+    }
+
+    .panel p {
+      margin: 0;
+      color: #635861;
+      line-height: 1.85;
+    }
+
+    .mini-card {
+      padding: 24px;
+      border-radius: 28px;
+    }
+
+    .mini-card .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: #fffaf2;
+      background: linear-gradient(135deg, #6f5a7e, #b89a62);
+    }
+
+    .mini-card h3 {
+      margin: 0 0 10px;
+      color: var(--purple-deep);
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .method {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .element-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .element-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.52);
+      border: 1px solid rgba(111,90,126,0.12);
+    }
+
+    .pill {
+      display: inline-flex;
+      justify-content: center;
+      padding: 8px 12px;
+      color: #fff;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .element-row p {
+      font-size: 14px;
+    }
+
+    .wireframe {
+      position: relative;
+      min-height: 380px;
+      border-radius: 28px;
+      padding: 26px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(68,51,78,0.86), rgba(111,90,126,0.78)),
+        radial-gradient(circle at 80% 20%, rgba(184,154,98,0.4), transparent 30%);
+      color: #fffaf2;
+    }
+
+    .phone {
+      width: min(260px, 80%);
+      margin: 0 auto;
+      padding: 14px;
+      border-radius: 32px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+    }
+
+    .phone-line {
+      height: 14px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.38);
+      margin-bottom: 10px;
+    }
+
+    .phone-hero {
+      height: 136px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(184,154,98,0.46));
+      margin-bottom: 12px;
+    }
+
+    .phone-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .phone-grid span {
+      height: 68px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .footer {
+      margin-top: 36px;
+      padding: 26px 0 0;
+      text-align: center;
+      color: rgba(63, 46, 67, 0.66);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .disclaimer {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.48);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .method {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .today-card {
+        min-height: auto;
+      }
+
+      .orbital {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin-top: 40px;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 14px;
+      }
+
+      .nav {
+        border-radius: 26px;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-copy,
+      .today-card,
+      .panel {
+        padding: 24px;
+        border-radius: 28px;
+      }
+
+      .date-strip,
+      .outfit,
+      .palette {
+        grid-template-columns: 1fr;
+      }
+
+      .today-top {
+        flex-direction: column;
+      }
+
+      .score-ring {
+        width: 92px;
+        height: 92px;
+      }
+
+      .element-row {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark">五</span>
+        <span>日辰五行</span>
+      </a>
+      <div class="nav-links">
+        <a href="#today">今日运势</a>
+        <a href="#style">五行穿搭</a>
+      </div>
+    </nav>
+
+    <section id="top" class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Daily Wuxing · Style Ritual</span>
+        <h1>每日运势，<br />穿出你的五行能量。</h1>
+        <p class="lead">
+          一个面向成熟用户的轻疗愈网页：根据日期自动生成今日五行、运势关键词、幸运色与穿搭建议。
+          页面风格以东方轻奢、雾紫疗愈、清晰可信为核心，适合女性成长、身心疗愈、个人IP或会员社群首页。
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#today">查看今日建议</a>
+          <a class="btn btn-secondary" href="#method">查看搭建逻辑</a>
+        </div>
+
+        <div class="date-strip">
+          <div class="metric">
+            <span>今日主五行</span>
+            <strong id="heroElement">—</strong>
+          </div>
+          <div class="metric">
+            <span>幸运色系</span>
+            <strong id="heroColor">—</strong>
+          </div>
+          <div class="metric">
+            <span>行动关键词</span>
+            <strong id="heroKeyword">—</strong>
+          </div>
+        </div>
+
+        <div class="orbital" aria-hidden="true">
+          <span class="element-dot dot-wood">木</span>
+          <span class="element-dot dot-fire">火</span>
+          <span class="element-dot dot-earth">土</span>
+          <span class="element-dot dot-metal">金</span>
+          <span class="element-dot dot-water">水</span>
+        </div>
+      </div>
+
+      <section id="today" class="today-card" aria-label="今日运势卡片">
+        <div class="date-control">
+          <input id="dateInput" type="date" aria-label="选择日期" />
+          <button id="todayBtn" class="tiny-btn" type="button">今天</button>
+        </div>
+
+        <div class="today-top">
+          <div>
+            <p class="eyebrow" id="dateLabel">—</p>
+            <h2 class="today-title" id="todayTitle">今日五行能量</h2>
+            <div class="tag-row" id="tagRow"></div>
+          </div>
+          <div class="score-ring" id="scoreRing" style="--score: 88; --daily-color: #6f5a7e;">
+            <strong id="scoreText">88</strong>
+          </div>
+        </div>
+
+        <h3 class="section-title">今日运势解读</h3>
+        <p class="fortune-copy" id="fortuneText">正在生成今日建议...</p>
+
+        <h3 id="style" class="section-title">五行穿搭色盘</h3>
+        <div class="palette" id="palette"></div>
+
+        <div class="outfit" id="outfitGrid"></div>
+        </div>
+      </section>
+    </section>
+
+
+    <section id="method" class="section method">
+      <div class="panel">
+        <h2>五行注解</h2>
+        <div class="element-list" style="margin-top: 22px;">
+          <div class="element-row">
+            <span class="pill" style="background: var(--wood)">木</span>
+            <p>青绿、成长、舒展、学习、关系修复。</p>
+          </div>
+          <div class="element-row">
+            <span class="pill" style="background: var(--fire)">火</span>
+            <p>红紫、表达、热情、曝光、创造力。</p>
+          </div>
+          <div class="element-row">
+            <span class="pill" style="background: var(--earth)">土</span>
+            <p>黄棕、稳定、承接、信任、长期规划。</p>
+          </div>
+          <div class="element-row">
+            <span class="pill" style="background: #b8b1a5">金</span>
+            <p>白金、秩序、审美、边界、专业判断。</p>
+          </div>
+          <div class="element-row">
+            <span class="pill" style="background: var(--water)">水</span>
+            <p>黑蓝、沉静、智慧、复盘、灵感流动。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wireframe">
+        <div class="phone" aria-hidden="true">
+          <div class="phone-line" style="width: 44%; margin-inline: auto;"></div>
+          <div class="phone-hero"></div>
+          <div class="phone-line" style="width: 88%;"></div>
+          <div class="phone-line" style="width: 64%;"></div>
+          <div class="phone-grid">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> 日辰五行 · Daily Wuxing Style<br />
+      适用于个人IP、疗愈课程、女性成长社群、每日穿搭内容产品原型。
+    </footer>
+  </main>
+
+  <script>
+    const elements = [
+      {
+        key: "wood",
+        name: "木",
+        fullName: "木 · 生长能量",
+        color: "#7fa484",
+        glow: "rgba(127, 164, 132, 0.28)",
+        keywords: ["成长", "舒展", "学习", "关系"],
+        lucky: ["松石绿", "青竹色", "浅杏白", "木质棕"],
+        palette: ["#7fa484", "#9bbf9e", "#e8dfcf", "#8a6f55"],
+        fortune: "今天适合打开新思路，主动连接人脉，也适合学习、整理计划和启动新的内容。穿搭上用青绿或木质色，让整个人显得温和、舒展、有生命力。",
+        outfit: [
+          ["主色", "青绿、橄榄绿、竹影绿，适合衬衫、针织、半裙或外套。"],
+          ["材质", "棉麻、真丝、细针织、木质配饰，强调自然呼吸感。"],
+          ["场景", "适合学习会、咨询沟通、轻商务、疗愈活动。"]
+        ]
+      },
+      {
+        key: "fire",
+        name: "火",
+        fullName: "火 · 表达能量",
+        color: "#b66a65",
+        glow: "rgba(182, 106, 101, 0.26)",
+        keywords: ["表达", "热情", "曝光", "创造"],
+        lucky: ["玫瑰红", "暖紫色", "香槟金", "奶油白"],
+        palette: ["#b66a65", "#a77793", "#c7a768", "#fff4df"],
+        fortune: "今天适合表达观点、对外展示、发内容、谈合作。火的能量会放大存在感，但也要避免急躁。穿搭可用小面积红紫或金色点缀，既提气色，又不显得过分张扬。",
+        outfit: [
+          ["主色", "玫瑰红、酒红、暖紫，适合口红、丝巾、内搭或包袋点缀。"],
+          ["材质", "缎面、细闪、光泽皮革，增加一点舞台感。"],
+          ["场景", "适合直播、演讲、约见客户、活动出席。"]
+        ]
+      },
+      {
+        key: "earth",
+        name: "土",
+        fullName: "土 · 稳定能量",
+        color: "#b89a62",
+        glow: "rgba(184, 154, 98, 0.28)",
+        keywords: ["稳定", "承接", "信任", "沉淀"],
+        lucky: ["燕麦色", "焦糖棕", "淡金色", "暖灰色"],
+        palette: ["#b89a62", "#c9b48a", "#e8dcc8", "#8e7f73"],
+        fortune: "今天适合做重要决定、整理资源、维护客户关系与沉淀内容体系。土的能量强调可信与稳重，穿搭建议用燕麦、焦糖、暖灰，呈现成熟专业的气场。",
+        outfit: [
+          ["主色", "燕麦、焦糖、卡其、暖灰，适合套装、大衣、阔腿裤。"],
+          ["材质", "羊毛、麂皮、粗花呢、柔软皮革，突出稳定质感。"],
+          ["场景", "适合签约、课程交付、团队会议、重要沟通。"]
+        ]
+      },
+      {
+        key: "metal",
+        name: "金",
+        fullName: "金 · 秩序能量",
+        color: "#b8b1a5",
+        glow: "rgba(184, 177, 165, 0.3)",
+        keywords: ["审美", "边界", "判断", "专业"],
+        lucky: ["珍珠白", "银灰色", "淡金色", "深咖色"],
+        palette: ["#f5f0e8", "#c7c3bb", "#d2b679", "#5b4a42"],
+        fortune: "今天适合精简、筛选、断舍离与做专业判断。金的能量让你更有边界感和审美标准。穿搭建议干净利落，白、银灰、淡金能强化高级感。",
+        outfit: [
+          ["主色", "珍珠白、银灰、象牙色，适合西装、衬衫、连衣裙。"],
+          ["材质", "珍珠、金属、挺括棉、利落西装面料，强调轮廓。"],
+          ["场景", "适合面谈、品牌拍摄、审美决策、专业场合。"]
+        ]
+      },
+      {
+        key: "water",
+        name: "水",
+        fullName: "水 · 智慧能量",
+        color: "#53677e",
+        glow: "rgba(83, 103, 126, 0.27)",
+        keywords: ["沉静", "复盘", "灵感", "流动"],
+        lucky: ["深蓝色", "墨黑色", "雾灰紫", "月光白"],
+        palette: ["#53677e", "#273446", "#8b8193", "#ede9e3"],
+        fortune: "今天适合复盘、冥想、写作、观察趋势和做内在整理。水的能量让你更敏锐，也更需要安静空间。穿搭建议深蓝、墨黑或雾灰紫，显得沉稳而有智慧。",
+        outfit: [
+          ["主色", "深蓝、墨黑、雾灰紫，适合长裙、风衣、针织套装。"],
+          ["材质", "垂坠面料、丝绒、柔软羊绒，增加流动感。"],
+          ["场景", "适合独处办公、内容创作、咨询倾听、深度交流。"]
+        ]
+      }
+    ];
+
+    const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+    const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+    const dailyTips = [
+      "先做一件最重要的小事，不要被信息流带走。",
+      "适合把想法说出来，贵人在交流中出现。",
+      "给自己留出空白，今天的灵感来自慢下来。",
+      "整理衣橱、桌面或计划表，会让能量更顺。",
+      "适合温柔但坚定地表达边界。",
+      "把复杂问题拆成三步，今天会更容易推进。",
+      "多喝水、少熬夜，让身体先稳定下来。",
+      "适合拍照、发内容、更新个人形象。",
+      "今天不急着证明自己，稳定输出就是好运。",
+      "把注意力放在长期价值，而不是短期情绪。"
+    ];
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function toLocalISO(date) {
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    }
+
+    function dayOfYear(date) {
+      const start = new Date(date.getFullYear(), 0, 0);
+      return Math.floor((date - start) / 86400000);
+    }
+
+    function seededIndex(date, mod, salt = 0) {
+      const y = date.getFullYear();
+      const m = date.getMonth() + 1;
+      const d = date.getDate();
+      const raw = y * 372 + m * 31 + d + dayOfYear(date) * 7 + salt * 13;
+      return Math.abs(raw) % mod;
+    }
+
+    function formatChineseDate(date) {
+      const week = ["日", "一", "二", "三", "四", "五", "六"][date.getDay()];
+      return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 · 星期${week}`;
+    }
+
+    function render(date) {
+      const index = seededIndex(date, elements.length);
+      const element = elements[index];
+      const support = elements[(index + 4) % elements.length];
+      const score = 76 + seededIndex(date, 19, 3);
+      const stem = stems[seededIndex(date, stems.length, 9)];
+      const branch = branches[seededIndex(date, branches.length, 6)];
+      const tip = dailyTips[seededIndex(date, dailyTips.length, 4)];
+
+      document.documentElement.style.setProperty("--daily-color", element.color);
+      document.documentElement.style.setProperty("--daily-glow", element.glow);
+      document.documentElement.style.setProperty("--score", score);
+
+      document.getElementById("heroElement").textContent = element.name;
+      document.getElementById("heroColor").textContent = element.lucky[0];
+      document.getElementById("heroKeyword").textContent = element.keywords[0];
+
+      document.getElementById("dateLabel").textContent = `${formatChineseDate(date)} · ${stem}${branch}日`;
+      document.getElementById("todayTitle").textContent = element.fullName;
+      document.getElementById("scoreText").textContent = score;
+      document.getElementById("scoreRing").style.setProperty("--score", score);
+      document.getElementById("scoreRing").style.setProperty("--daily-color", element.color);
+
+      const tags = [
+        `主五行：${element.name}`,
+        `辅助：${support.name}`,
+        `关键词：${element.keywords.join(" / ")}`,
+        `今日提醒：${tip}`
+      ];
+
+      document.getElementById("tagRow").innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join("");
+
+      document.getElementById("fortuneText").textContent = `${element.fortune} ${tip}`;
+
+      document.getElementById("palette").innerHTML = element.palette.map((color, i) => `
+        <div class="swatch" style="background:${color}">
+          <span>${["主能量", "辅助色", "平衡色", "稳定色"][i]}</span>
+          <strong>${element.lucky[i]}</strong>
+        </div>
+      `).join("");
+
+      document.getElementById("outfitGrid").innerHTML = element.outfit.map(item => `
+        <article class="outfit-card">
+          <strong>${item[0]}</strong>
+          <p>${item[1]}</p>
+        </article>
+      `).join("");
+    }
+
+    const input = document.getElementById("dateInput");
+    const todayBtn = document.getElementById("todayBtn");
+    const now = new Date();
+    input.value = toLocalISO(now);
+    render(now);
+
+    input.addEventListener("change", () => {
+      const selected = new Date(input.value + "T00:00:00");
+      if (!Number.isNaN(selected.getTime())) render(selected);
+    });
+
+    todayBtn.addEventListener("click", () => {
+      const today = new Date();
+      input.value = toLocalISO(today);
+      render(today);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

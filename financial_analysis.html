@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contract Monitoring – 财务分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8a020;
+    --accent2: #2e7d5e;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1f2d3d;
+    --muted: #6b7a90;
+    --border: #dde3ed;
+    --red: #c0392b;
+    --green: #27ae60;
+    --orange: #e67e22;
+    --blue: #2980b9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
+    color: #fff;
+    padding: 32px 40px 28px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+  .header p { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+  .header-meta { text-align: right; font-size: 12px; opacity: 0.7; }
+
+  /* KPI row */
+  .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 24px 32px; }
+  .kpi-card {
+    background: var(--card); border-radius: 12px;
+    padding: 20px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-top: 4px solid var(--primary);
+  }
+  .kpi-card.accent  { border-top-color: var(--accent); }
+  .kpi-card.accent2 { border-top-color: var(--accent2); }
+  .kpi-card.red     { border-top-color: var(--red); }
+  .kpi-card.orange  { border-top-color: var(--orange); }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: var(--primary); line-height: 1.1; }
+  .kpi-value.up   { color: var(--green); }
+  .kpi-value.down { color: var(--red); }
+  .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* Grid layout */
+  .section { padding: 0 32px 28px; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 14px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-65-35 { display: grid; grid-template-columns: 65fr 35fr; gap: 20px; }
+  .grid-40-60 { display: grid; grid-template-columns: 40fr 60fr; gap: 20px; }
+
+  /* Chart cards */
+  .chart-card {
+    background: var(--card); border-radius: 12px;
+    padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .chart-card h3 { font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 14px; }
+  .chart-wrap { position: relative; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #f0f3f9; color: var(--primary); padding: 8px 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+  td { padding: 7px 10px; border-bottom: 1px solid #edf0f6; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafd; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 10px; font-weight: 600;
+  }
+  .badge-green { background: #e8f5e9; color: #2e7d32; }
+  .badge-red   { background: #fce4ec; color: #c62828; }
+  .badge-orange{ background: #fff3e0; color: #e65100; }
+  .badge-blue  { background: #e3f2fd; color: #1565c0; }
+
+  /* Insights box */
+  .insights-box {
+    background: #fffde7; border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 20px;
+    font-size: 12px; line-height: 1.7;
+  }
+  .insights-box b { color: var(--primary); }
+
+  /* Progress bar */
+  .prog-wrap { margin: 4px 0; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+  .prog-bar { height: 6px; background: #e8ecf4; border-radius: 3px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 3px; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 20px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 16px; }
+
+  /* Trend indicator */
+  .trend-up   { color: var(--green); font-size: 11px; }
+  .trend-down { color: var(--red);   font-size: 11px; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div>
+    <h1>📋 Contract Monitoring &nbsp;财务分析报告</h1>
+    <p>租金收款 · 合同状态 · 项目绩效 · 代理人业绩</p>
+  </div>
+  <div class="header-meta">
+    <div>报告生成日期：2026年5月1日</div>
+    <div>数据来源：updated Contract-Monitoring.xlsx</div>
+    <div>统计区间：2023年8月 – 2026年4月</div>
+  </div>
+</div>
+
+<!-- ===== KPI ROW ===== -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-label">全期总收款</div>
+    <div class="kpi-value">₱148.9M</div>
+    <div class="kpi-sub">覆盖33个月度报表</div>
+  </div>
+  <div class="kpi-card accent">
+    <div class="kpi-label">2024年全年收款</div>
+    <div class="kpi-value" style="color:var(--accent)">₱81.6M</div>
+    <div class="kpi-sub">历史最高年度</div>
+  </div>
+  <div class="kpi-card accent2">
+    <div class="kpi-label">当前活跃合同</div>
+    <div class="kpi-value" style="color:var(--accent2)">188套</div>
+    <div class="kpi-sub">含公证合同187套</div>
+  </div>
+  <div class="kpi-card red">
+    <div class="kpi-label">近期到期合同</div>
+    <div class="kpi-value down">108份</div>
+    <div class="kpi-sub">月均租金 ₱101,259</div>
+  </div>
+  <div class="kpi-card orange">
+    <div class="kpi-label">2025年总收款</div>
+    <div class="kpi-value" style="color:var(--orange)">₱25.5M</div>
+    <div class="kpi-sub">↓68.8% vs 2024年</div>
+  </div>
+</div>
+
+<!-- ===== INSIGHTS ===== -->
+<div class="section">
+  <div class="insights-box">
+    💡 <b>核心发现：</b>
+    2024年是业务高峰年，全年收款₱81.6M，其中7月单月最高达₱13.0M。进入2025年后收款规模显著下滑，全年仅₱25.5M（同比-68.8%），主要原因是活跃合同存量减少、部分高价值合同到期未续。
+    <b>Multinational Village</b>是核心收益房产，贡献历史累计收款₱77.7M（占比约52%）。代理方面，<b>Ma'am Angelina</b>与<b>Kuya Ben</b>合计贡献主要收款来源。
+    目前108份合同面临到期，合计月租金价值₱10.9M，需重点跟进续约工作。
+  </div>
+</div>
+
+<!-- ===== SECTION 1: 月度趋势 ===== -->
+<div class="section">
+  <div class="section-title">📈 月度收款趋势（2023年8月 – 2026年4月）</div>
+  <div class="chart-card">
+    <h3>各月租金收款总额（₱）</h3>
+    <div class="chart-wrap" style="height:240px">
+      <canvas id="monthlyTrend"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: 年度 + 2024 vs 2025 ===== -->
+<div class="section">
+  <div class="section-title">📊 年度收款对比</div>
+  <div class="grid-2">
+    <div class="chart-card">
+      <h3>年度收款总额对比</h3>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="yearlyBar"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>2024 vs 2025 月度对比（₱万）</h3>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="compare2425"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: 项目排名 ===== -->
+<div class="section">
+  <div class="section-title">🏢 项目收款排名</div>
+  <div class="grid-65-35">
+    <div class="chart-card">
+      <h3>Top 12 项目 – 历史累计收款（₱百万）</h3>
+      <div class="chart-wrap" style="height:280px">
+        <canvas id="projectBar"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>项目收款占比（Top 8）</h3>
+      <div class="chart-wrap" style="height:280px">
+        <canvas id="projectPie"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: 代理业绩 ===== -->
+<div class="section">
+  <div class="section-title">👤 代理人业绩分析</div>
+  <div class="grid-2">
+    <div class="chart-card">
+      <h3>代理人收款贡献（₱，Top 8）</h3>
+      <div class="chart-wrap" style="height:230px">
+        <canvas id="agentBar"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>代理人业绩明细</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>代理人</th><th class="num">总收款 (₱)</th><th class="num">占比</th>
+          </tr>
+        </thead>
+        <tbody id="agentTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: 合同状态 ===== -->
+<div class="section">
+  <div class="section-title">📝 合同状态 & 租约分析</div>
+  <div class="grid-3">
+    <div class="chart-card">
+      <h3>合同状态分布（总220份）</h3>
+      <div class="chart-wrap" style="height:200px">
+        <canvas id="statusPie"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>租期类型分布</h3>
+      <div class="chart-wrap" style="height:200px">
+        <canvas id="termPie"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>月租金价格区间分析</h3>
+      <div id="priceDistrib"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 6: 近期到期 ===== -->
+<div class="section">
+  <div class="section-title">⏰ 近期到期合同 – 高风险房产</div>
+  <div class="chart-card">
+    <h3>按项目统计 – 到期合同月租金价值 (Top 10)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>项目</th>
+          <th class="num">到期合同月租金 (₱)</th>
+          <th class="num">风险敞口占比</th>
+          <th>风险评级</th>
+        </tr>
+      </thead>
+      <tbody id="expiryTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: 2025/2026 月度趋势 ===== -->
+<div class="section">
+  <div class="section-title">🔮 2025–2026年收款趋势（月度）</div>
+  <div class="chart-card">
+    <h3>2025年1月 – 2026年4月 各月收款（₱）</h3>
+    <div class="chart-wrap" style="height:200px">
+      <canvas id="recentTrend"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Contract Monitoring Financial Analysis Report &nbsp;|&nbsp; 数据截至 2026年4月 &nbsp;|&nbsp; 仅供内部决策参考
+</div>
+
+<script>
+// ============ DATA ============
+const monthlyLabels = [
+  'Aug-23','Oct-23','Nov-23',
+  'Jan-24','Feb-24','Mar-24','Apr-24','Jun-24','Jul-24','Aug-24','Sep-24','Oct-24','Nov-24',
+  'Jan-25','Feb-25','Mar-25','Apr-25','May-25','Jun-25','Jul-25','Aug-25','Sep-25','Oct-25','Nov-25','Dec-25',
+  'Jan-26','Feb-26','Mar-26','Apr-26'
+];
+const monthlyValues = [
+  12030000, 10171000, 13605000,
+  6954000, 9894000, 10557600, 4890000, 6384000, 13010000, 8269000, 7558000, 3985000, 10120000,
+  4695000, 4845000, 3564000, 2011000, 2120000, 880000, 1321000, 1551000, 1431000, 571000, 1460000, 1035000,
+  806000, 1252000, 1581000, 2375000
+];
+const bgColors = monthlyLabels.map(l => {
+  if(l.includes('23')) return 'rgba(52,152,219,0.75)';
+  if(l.includes('24')) return 'rgba(39,174,96,0.75)';
+  if(l.includes('25')) return 'rgba(230,126,34,0.75)';
+  return 'rgba(142,68,173,0.75)';
+});
+
+// Yearly
+const yearlyData = { '2023': 35806000, '2024': 81621600, '2025': 25484000, '2026': 6014000 };
+
+// 2024 vs 2025 monthly
+const months24 = [1,2,3,4,6,7,8,9,10,11];
+const vals24   = [6954000,9894000,10557600,4890000,6384000,13010000,8269000,7558000,3985000,10120000];
+const months25Labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const vals25 = [4695000,4845000,3564000,2011000,2120000,880000,1321000,1551000,1431000,571000,1460000,1035000];
+const vals24_aligned = [6954000,9894000,10557600,4890000,0,6384000,13010000,8269000,7558000,3985000,10120000,0];
+
+// Projects
+const projectNames = [
+  'Multinational Village','Casiana Residences','Marina Bayhomes','Oak Harbor Residences',
+  'K.E Towers','Royal Pacific','Marina Seaview','Monarch Parsksuites','Bogata Oasis','One Roxas',
+  'Royal Peak Plaza','Richview Residence'
+];
+const projectVals = [77699600,12562000,6090000,3080000,3000000,2400000,2162000,2160000,1990000,1840000,1800000,1610000];
+
+// Agents (normalized)
+const agentNames = ["Ma'am Angelina","Kuya Ben","Ben","JOYCE","Mary","Kath","Ma'am Angelina/JOYCE"];
+const agentVals  = [18036000,10858000,7228000,4284000,2820000,2535000,1245000];
+const agentTotal = agentVals.reduce((a,b)=>a+b,0);
+
+// Contract status
+const statusLabels = ['已公证合同','已结束','未完成','其他'];
+const statusVals   = [188, 20, 10, 2];
+
+// Term
+const termLabels = ['一年','六个月','两年','三年','五年','半年'];
+const termVals   = [192, 19, 3, 2, 2, 1];
+
+// Near expiry
+const expiryProjects = ['Multinational Village','Casiana Residences','Factor Compound',
+  'Oak Harbor Residences','One Roxas','Royal Pacific','Royal Peak Plaza',
+  'Marina Seaview Residences','Marina Bayhomes','Richview Residence'];
+const expiryVals = [5965000,1130000,500000,325000,230000,220000,200000,183000,175000,170000];
+const expiryTotal = expiryVals.reduce((a,b)=>a+b,0);
+
+// Recent trend 2025-2026
+const recentLabels = ['Jan-25','Feb-25','Mar-25','Apr-25','May-25','Jun-25','Jul-25','Aug-25',
+  'Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26','Mar-26','Apr-26'];
+const recentVals = [4695000,4845000,3564000,2011000,2120000,880000,1321000,1551000,
+  1431000,571000,1460000,1035000,806000,1252000,1581000,2375000];
+
+// ============ CHART.JS DEFAULTS ============
+Chart.defaults.font.family = "'Segoe UI', Arial, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#6b7a90';
+
+function fmtM(v) { return '₱' + (v/1000000).toFixed(1)+'M'; }
+function fmtK(v) { return '₱' + (v/1000).toFixed(0)+'K'; }
+
+// ============ MONTHLY TREND ============
+new Chart(document.getElementById('monthlyTrend'), {
+  type: 'bar',
+  data: {
+    labels: monthlyLabels,
+    datasets: [{
+      label: '月度收款',
+      data: monthlyValues,
+      backgroundColor: bgColors,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => fmtM(ctx.raw) } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 10 } } },
+      y: { ticks: { callback: v => fmtM(v) }, grid: { color: '#f0f3f9' } }
+    }
+  }
+});
+
+// ============ YEARLY BAR ============
+new Chart(document.getElementById('yearlyBar'), {
+  type: 'bar',
+  data: {
+    labels: Object.keys(yearlyData),
+    datasets: [{
+      label: '年度总收款',
+      data: Object.values(yearlyData),
+      backgroundColor: ['rgba(52,152,219,0.8)','rgba(39,174,96,0.8)','rgba(230,126,34,0.8)','rgba(142,68,173,0.8)'],
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => fmtM(ctx.raw) } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { ticks: { callback: v => fmtM(v) }, grid: { color: '#f0f3f9' } }
+    }
+  }
+});
+
+// ============ 2024 vs 2025 ============
+new Chart(document.getElementById('compare2425'), {
+  type: 'bar',
+  data: {
+    labels: months25Labels,
+    datasets: [
+      { label: '2024', data: vals24_aligned.map(v=>v/10000), backgroundColor: 'rgba(39,174,96,0.7)', borderRadius: 3 },
+      { label: '2025', data: vals25.map(v=>v/10000), backgroundColor: 'rgba(230,126,34,0.7)', borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      tooltip: { callbacks: { label: ctx => '₱' + (ctx.raw*10000).toLocaleString() } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { ticks: { callback: v => '₱' + v + '万' }, grid: { color: '#f0f3f9' } }
+    }
+  }
+});
+
+// ============ PROJECT BAR ============
+new Chart(document.getElementById('projectBar'), {
+  type: 'bar',
+  data: {
+    labels: projectNames,
+    datasets: [{
+      label: '累计收款',
+      data: projectVals.map(v=>v/1000000),
+      backgroundColor: 'rgba(26,58,92,0.75)',
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => '₱' + ctx.raw.toFixed(1) + 'M' } }
+    },
+    scales: {
+      x: { ticks: { callback: v => v + 'M' }, grid: { color: '#f0f3f9' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ============ PROJECT PIE ============
+new Chart(document.getElementById('projectPie'), {
+  type: 'doughnut',
+  data: {
+    labels: projectNames.slice(0,8),
+    datasets: [{
+      data: projectVals.slice(0,8),
+      backgroundColor: ['#1a3a5c','#2980b9','#27ae60','#e8a020','#e67e22','#8e44ad','#c0392b','#16a085'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 10 }, padding: 8 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ₱' + (ctx.raw/1000000).toFixed(1) + 'M' } }
+    }
+  }
+});
+
+// ============ AGENT BAR ============
+new Chart(document.getElementById('agentBar'), {
+  type: 'bar',
+  data: {
+    labels: agentNames,
+    datasets: [{
+      label: '代理收款',
+      data: agentVals,
+      backgroundColor: ['#1a3a5c','#2e7d5e','#2980b9','#8e44ad','#e8a020','#e67e22','#c0392b'],
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => '₱' + ctx.raw.toLocaleString() } }
+    },
+    scales: {
+      x: { ticks: { callback: v => '₱' + (v/1000000).toFixed(1)+'M' }, grid: { color: '#f0f3f9' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ AGENT TABLE ============
+const agentTbody = document.getElementById('agentTable');
+agentNames.forEach((n,i) => {
+  const pct = ((agentVals[i]/agentTotal)*100).toFixed(1);
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${i+1}</td>
+    <td><b>${n}</b></td>
+    <td class="num">₱${agentVals[i].toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+  `;
+  agentTbody.appendChild(tr);
+});
+
+// ============ STATUS PIE ============
+new Chart(document.getElementById('statusPie'), {
+  type: 'pie',
+  data: {
+    labels: statusLabels,
+    datasets: [{
+      data: statusVals,
+      backgroundColor: ['#27ae60','#c0392b','#e67e22','#95a5a6'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 6 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.raw + '份' } }
+    }
+  }
+});
+
+// ============ TERM PIE ============
+new Chart(document.getElementById('termPie'), {
+  type: 'doughnut',
+  data: {
+    labels: termLabels,
+    datasets: [{
+      data: termVals,
+      backgroundColor: ['#1a3a5c','#2980b9','#27ae60','#e8a020','#e67e22','#8e44ad'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 6 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.raw + '份' } }
+    }
+  }
+});
+
+// ============ PRICE DISTRIBUTION ============
+const priceRanges = [
+  { label: '< ₱30K', count: 28, pct: 13, color: '#27ae60' },
+  { label: '₱30K–₱60K', count: 55, pct: 25, color: '#2980b9' },
+  { label: '₱60K–₱100K', count: 74, pct: 34, color: '#1a3a5c' },
+  { label: '₱100K–₱200K', count: 44, pct: 20, color: '#e67e22' },
+  { label: '> ₱200K', count: 19, pct: 9, color: '#c0392b' },
+];
+const pdiv = document.getElementById('priceDistrib');
+pdiv.innerHTML = '<p style="font-size:11px;color:#6b7a90;margin-bottom:10px;">月租金区间分布（220份合同）</p>';
+priceRanges.forEach(r => {
+  pdiv.innerHTML += `
+    <div class="prog-wrap">
+      <div class="prog-label"><span>${r.label}</span><span>${r.count}份 (${r.pct}%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${r.pct*3}%;background:${r.color}"></div></div>
+    </div>`;
+});
+
+// ============ EXPIRY TABLE ============
+const expiryTbody = document.getElementById('expiryTable');
+expiryProjects.forEach((p,i) => {
+  const pct = ((expiryVals[i]/expiryTotal)*100).toFixed(1);
+  let badge = 'badge-blue';
+  if(pct > 30) badge = 'badge-red';
+  else if(pct > 10) badge = 'badge-orange';
+  let risk = '低';
+  if(pct > 30) risk = '极高';
+  else if(pct > 10) risk = '高';
+  else if(pct > 5) risk = '中';
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><b>${p}</b></td>
+    <td class="num">₱${expiryVals[i].toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+    <td><span class="badge ${badge}">${risk}</span></td>
+  `;
+  expiryTbody.appendChild(tr);
+});
+
+// ============ RECENT TREND ============
+new Chart(document.getElementById('recentTrend'), {
+  type: 'line',
+  data: {
+    labels: recentLabels,
+    datasets: [{
+      label: '月度收款',
+      data: recentVals,
+      borderColor: '#1a3a5c',
+      backgroundColor: 'rgba(26,58,92,0.08)',
+      tension: 0.4,
+      fill: true,
+      pointBackgroundColor: '#e8a020',
+      pointRadius: 5,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => '₱' + ctx.raw.toLocaleString() } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { ticks: { callback: v => '₱' + (v/1000000).toFixed(1)+'M' }, grid: { color: '#f0f3f9' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
