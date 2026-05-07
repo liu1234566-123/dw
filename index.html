@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Coze 智能体导航</title>
+  <link rel="icon" href="./favicon.ico" sizes="any">
   <style>
     :root {
       --bg: #fff7ef;
@@ -446,6 +447,37 @@
       display: block;
     }
 
+    .agent-types {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1;
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 7px;
+      max-width: calc(100% - 132px);
+      transition: transform 260ms ease;
+    }
+
+    .agent-type {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid color-mix(in srgb, var(--accent-3) 40%, var(--line));
+      border-radius: 999px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--panel-strong) 86%, transparent), color-mix(in srgb, var(--accent-3) 14%, transparent));
+      color: color-mix(in srgb, var(--text) 78%, var(--accent-3));
+      font-size: 0.82rem;
+      font-weight: 760;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+      transition: border-color 260ms ease, color 260ms ease;
+    }
+
     .agent-name {
       position: relative;
       z-index: 1;
@@ -506,9 +538,17 @@
     .agent-card:focus-visible .agent-name,
     .agent-card:hover .agent-desc,
     .agent-card:focus-visible .agent-desc,
+    .agent-card:hover .agent-types,
+    .agent-card:focus-visible .agent-types,
     .agent-card:hover .card-footer,
     .agent-card:focus-visible .card-footer {
       transform: translateY(-3px);
+    }
+
+    .agent-card:hover .agent-type,
+    .agent-card:focus-visible .agent-type {
+      border-color: color-mix(in srgb, var(--accent-2) 52%, var(--line));
+      color: var(--accent-2);
     }
 
     .agent-card:hover .agent-desc,
@@ -574,6 +614,12 @@
       .agent-card {
         min-height: 285px;
       }
+
+      .agent-types {
+        top: 18px;
+        right: 18px;
+        max-width: calc(100% - 124px);
+      }
     }
   </style>
 </head>
@@ -619,13 +665,13 @@
         <div class="lead-content">
           <div class="eyebrow">AGENT COLLECTION</div>
           <p class="lead-title">把专业智能体，放在一个顺手的位置。</p>
-          <p class="lead-copy">东方智慧疗愈、美妆、餐饮推荐与订位服务，在同一个清爽、有质感的界面里自然展开。</p>
+          <p class="lead-copy">东方智慧疗愈、美妆穿搭、餐饮推荐与地产咨询，在同一个清爽、有质感的界面里自然展开。</p>
         </div>
       </div>
       <aside class="metric-panel" aria-label="智能体数量">
         <div class="metric">
-          <b>4</b>
-          <span>个已收录智能体，覆盖疗愈、美妆与餐饮服务场景。</span>
+          <b>6</b>
+          <span>个已收录智能体，覆盖疗愈、美妆、穿搭、餐饮与地产服务场景。</span>
         </div>
         <a class="quick-link" href="#agents">
           查看全部
@@ -640,6 +686,9 @@
       <a class="agent-card" href="https://www.coze.cn/store/agent/7617679993673859110?bot_id=true&amp;bid=6juvkub54401k" target="_blank" rel="noopener noreferrer">
         <div class="avatar-wrap">
           <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/986f9d3529b44d0cb31f8cce8fa48dad~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780566622&amp;x-signature=CpZS4o2gzN5iZOhJZ69IzUQOYjI%3D" alt="东方智慧疗愈美希老师头像">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">东方疗愈</span>
         </div>
         <div>
           <h2 class="agent-name">东方智慧疗愈美希老师</h2>
@@ -657,6 +706,9 @@
         <div class="avatar-wrap">
           <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/165284e2fd584fb79c503c848c02ab63~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780565420&amp;x-signature=KAyro7sc75bRfTAo5fJ3%2FypkD10%3D" alt="美妆小助手头像">
         </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">美妆护肤</span>
+        </div>
         <div>
           <h2 class="agent-name">美妆小助手</h2>
           <p class="agent-desc">能帮助你护肤、美妆的专业小助手。</p>
@@ -672,6 +724,10 @@
       <a class="agent-card" href="https://www.coze.cn/store/agent/7629304877159727140?bot_id=true" target="_blank" rel="noopener noreferrer">
         <div class="avatar-wrap">
           <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/402d64f87e1c4f828c41baf98ffe0077~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713502&amp;x-signature=Bx4zLddDPl%2FFzVWE4Qij3e2iD3U%3D" alt="杭州尚食居富阳菜智能体头像">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">餐饮推荐</span>
+          <span class="agent-type">餐饮订位</span>
         </div>
         <div>
           <h2 class="agent-name">杭州尚食居富阳菜智能体</h2>
@@ -689,9 +745,51 @@
         <div class="avatar-wrap">
           <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/052f927aac96459d83d570095c8bc11e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713667&amp;x-signature=2rA1y4oz4IOVO9FtX%2Bceux8Vjfk%3D" alt="欣野餐饮小助手头像">
         </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">餐饮推荐</span>
+          <span class="agent-type">餐饮订位</span>
+        </div>
         <div>
           <h2 class="agent-name">欣野餐饮小助手</h2>
           <p class="agent-desc">欣野餐饮的点餐助手能推荐合适的菜肴和定餐位。</p>
+        </div>
+        <span class="card-footer">
+          进入智能体
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+          </svg>
+        </span>
+      </a>
+
+      <a class="agent-card" href="https://www.coze.cn/store/agent/7615068611492823050?bot_id=true&amp;bid=6jv2p5hr85g1i" target="_blank" rel="noopener noreferrer">
+        <div class="avatar-wrap">
+          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/6361a5b011124fe8ab380a9f73a6f837~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780737684&amp;x-signature=Sn6MqTq1cwCyVVoF6gKa0xE7js8%3D" alt="服饰穿搭推荐小助手头像">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">服饰穿搭</span>
+        </div>
+        <div>
+          <h2 class="agent-name">服饰穿搭推荐小助手</h2>
+          <p class="agent-desc">一个能帮助您服饰穿搭推荐的小助手。</p>
+        </div>
+        <span class="card-footer">
+          进入智能体
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+          </svg>
+        </span>
+      </a>
+
+      <a class="agent-card" href="https://www.coze.com/store/agent/7634466437574459397?bot_id=true" target="_blank" rel="noopener noreferrer">
+        <div class="avatar-wrap">
+          <img src="https://lf16-coze-tos-sign.oceanapi-i18n.com/obj/ocean-cloud-tos-sg/FileBizType.BIZ_BOT_ICON/7634472087705797685_1777539251922514101_sxUgbUVmgm.jpg?x-expires=1778751858&amp;x-signature=Jad1UPiv17bfbbPnpKYIPgZ92k4%3D" alt="Tianmen Real Estate Intelligent Agent avatar">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">地产咨询</span>
+        </div>
+        <div>
+          <h2 class="agent-name">Tianmen Real Estate Intelligent Agent</h2>
+          <p class="agent-desc">The AI Agent of Tianmen Real Estate can answer customers' real estate-related questions.</p>
         </div>
         <span class="card-footer">
           进入智能体
