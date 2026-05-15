@@ -552,7 +552,7 @@
     }
 
     .agent-card:hover,
-    .agent-card:focus-visible {
+    .agent-card:focus-within {
       transform: translateY(-8px);
       border-color: color-mix(in srgb, var(--accent-2) 54%, var(--line));
       background: var(--panel-strong);
@@ -563,12 +563,12 @@
     }
 
     .agent-card:hover::after,
-    .agent-card:focus-visible::after {
+    .agent-card:focus-within::after {
       opacity: 1;
       animation: cardGlide 900ms ease forwards;
     }
 
-    .agent-card:focus-visible {
+    .agent-card:focus-within {
       box-shadow: 0 0 0 5px var(--focus), var(--shadow);
     }
 
@@ -648,22 +648,60 @@
       transition: transform 260ms ease, color 260ms ease;
     }
 
-    .card-footer {
+    .card-actions {
       position: relative;
       z-index: 1;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       padding-top: 16px;
       border-top: 1px solid var(--line);
+      transition: transform 260ms ease;
+    }
+
+    .agent-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 12px;
+      border: 1px solid color-mix(in srgb, var(--accent-2) 34%, var(--line));
+      border-radius: 8px;
+      background: var(--panel-strong);
       color: var(--accent-2);
       font-size: 0.95rem;
       font-weight: 700;
-      transition: transform 260ms ease, color 260ms ease;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 220ms ease, color 220ms ease, border-color 220ms ease, background 220ms ease;
     }
 
-    .card-footer svg,
+    .agent-action--primary {
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 18%, transparent), var(--panel-strong));
+    }
+
+    .agent-action--secondary {
+      color: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+    }
+
+    .agent-action:hover,
+    .agent-action:focus-visible {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--accent-2) 62%, var(--line));
+      outline: 3px solid var(--focus);
+    }
+
+    .agent-action--secondary:hover,
+    .agent-action--secondary:focus-visible {
+      border-color: color-mix(in srgb, var(--accent) 66%, var(--line));
+      color: var(--accent);
+    }
+
+    .agent-action svg,
     .quick-link svg {
       width: 17px;
       height: 17px;
@@ -671,12 +709,13 @@
       flex: 0 0 auto;
     }
 
-    .agent-card:hover .card-footer svg {
+    .agent-action:hover svg,
+    .agent-action:focus-visible svg {
       transform: translateX(3px);
     }
 
     .agent-card:hover .avatar-wrap,
-    .agent-card:focus-visible .avatar-wrap {
+    .agent-card:focus-within .avatar-wrap {
       transform: translateY(-4px) scale(1.04);
       box-shadow:
         0 20px 44px color-mix(in srgb, var(--accent-2) 28%, transparent),
@@ -684,24 +723,24 @@
     }
 
     .agent-card:hover .agent-name,
-    .agent-card:focus-visible .agent-name,
+    .agent-card:focus-within .agent-name,
     .agent-card:hover .agent-desc,
-    .agent-card:focus-visible .agent-desc,
+    .agent-card:focus-within .agent-desc,
     .agent-card:hover .agent-types,
-    .agent-card:focus-visible .agent-types,
-    .agent-card:hover .card-footer,
-    .agent-card:focus-visible .card-footer {
+    .agent-card:focus-within .agent-types,
+    .agent-card:hover .card-actions,
+    .agent-card:focus-within .card-actions {
       transform: translateY(-3px);
     }
 
     .agent-card:hover .agent-type,
-    .agent-card:focus-visible .agent-type {
+    .agent-card:focus-within .agent-type {
       border-color: color-mix(in srgb, var(--accent-2) 52%, var(--line));
       color: var(--accent-2);
     }
 
     .agent-card:hover .agent-desc,
-    .agent-card:focus-visible .agent-desc {
+    .agent-card:focus-within .agent-desc {
       color: color-mix(in srgb, var(--text) 82%, var(--muted));
     }
 
@@ -846,7 +885,7 @@
     </section>
 
     <section class="grid" id="agents" aria-label="智能体列表">
-      <a class="agent-card" href="https://www.coze.cn/store/agent/7617679993673859110?bot_id=true&amp;bid=6juvkub54401k" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/986f9d3529b44d0cb31f8cce8fa48dad~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780566622&amp;x-signature=CpZS4o2gzN5iZOhJZ69IzUQOYjI%3D" alt="东方智慧疗愈美希老师头像">
         </div>
@@ -857,15 +896,23 @@
           <h2 class="agent-name">东方智慧疗愈美希老师</h2>
           <p class="agent-desc">美希老师的 AI 分身，一个做东方智慧疗愈的行者。</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7617679993673859110?bot_id=true&amp;bid=6juvkub54401k" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7617679993673859110" data-agent-title="东方智慧疗愈美希老师">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
 
-      <a class="agent-card" href="https://www.coze.cn/store/agent/7615246755881861154?bot_id=true&amp;bid=6judo5fpk3019" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/165284e2fd584fb79c503c848c02ab63~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780565420&amp;x-signature=KAyro7sc75bRfTAo5fJ3%2FypkD10%3D" alt="美妆小助手头像">
         </div>
@@ -876,15 +923,23 @@
           <h2 class="agent-name">美妆小助手</h2>
           <p class="agent-desc">能帮助你护肤、美妆的专业小助手。</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7615246755881861154?bot_id=true&amp;bid=6judo5fpk3019" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7615246755881861154" data-agent-title="美妆小助手">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
 
-      <a class="agent-card" href="https://www.coze.cn/store/agent/7629304877159727140?bot_id=true" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/402d64f87e1c4f828c41baf98ffe0077~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713502&amp;x-signature=Bx4zLddDPl%2FFzVWE4Qij3e2iD3U%3D" alt="杭州尚食居富阳菜智能体头像">
         </div>
@@ -896,15 +951,23 @@
           <h2 class="agent-name">杭州尚食居富阳菜智能体</h2>
           <p class="agent-desc">杭州尚食居富阳菜小助手，能帮你介绍富阳菜，帮你定餐位。</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7629304877159727140?bot_id=true" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-experience-status="pending" data-agent-title="杭州尚食居富阳菜智能体">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
 
-      <a class="agent-card" href="https://www.coze.cn/store/agent/7624038966223863848?bot_id=true" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/052f927aac96459d83d570095c8bc11e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713667&amp;x-signature=2rA1y4oz4IOVO9FtX%2Bceux8Vjfk%3D" alt="欣野餐饮小助手头像">
         </div>
@@ -916,15 +979,23 @@
           <h2 class="agent-name">欣野餐饮小助手</h2>
           <p class="agent-desc">欣野餐饮的点餐助手能推荐合适的菜肴和定餐位。</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7624038966223863848?bot_id=true" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-experience-status="pending" data-agent-title="欣野餐饮小助手">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
 
-      <a class="agent-card" href="https://www.coze.cn/store/agent/7615068611492823050?bot_id=true&amp;bid=6jv2p5hr85g1i" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/6361a5b011124fe8ab380a9f73a6f837~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780737684&amp;x-signature=Sn6MqTq1cwCyVVoF6gKa0xE7js8%3D" alt="服饰穿搭推荐小助手头像">
         </div>
@@ -935,15 +1006,23 @@
           <h2 class="agent-name">服饰穿搭推荐小助手</h2>
           <p class="agent-desc">一个能帮助您服饰穿搭推荐的小助手。</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7615068611492823050?bot_id=true&amp;bid=6jv2p5hr85g1i" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7615068611492823050" data-agent-title="服饰穿搭推荐小助手">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
 
-      <a class="agent-card" href="https://www.coze.com/store/agent/7634466437574459397?bot_id=true" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://lf16-coze-tos-sign.oceanapi-i18n.com/obj/ocean-cloud-tos-sg/FileBizType.BIZ_BOT_ICON/7634472087705797685_1777539251922514101_sxUgbUVmgm.jpg?x-expires=1778751858&amp;x-signature=Jad1UPiv17bfbbPnpKYIPgZ92k4%3D" alt="Tianmen Real Estate Intelligent Agent avatar">
         </div>
@@ -954,15 +1033,23 @@
           <h2 class="agent-name">Tianmen Real Estate Intelligent Agent</h2>
           <p class="agent-desc">The AI Agent of Tianmen Real Estate can answer customers' real estate-related questions.</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.com/store/agent/7634466437574459397?bot_id=true" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-experience-status="pending" data-agent-title="Tianmen Real Estate Intelligent Agent">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
 
-      <a class="agent-card" href="https://www.coze.cn/store/agent/7637330277958074420?bot_id=true&amp;bid=6jvaf2bds201k" target="_blank" rel="noopener noreferrer">
+      <article class="agent-card">
         <div class="avatar-wrap">
           <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ee90a33789284601ab176814b8c393d7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780800553&amp;x-signature=VBhoPye2g3c7VF9CrkH2T7mDGFs%3D" alt="微信视频号短视频爆款文案生成助手头像">
         </div>
@@ -974,18 +1061,27 @@
           <h2 class="agent-name">微信视频号短视频爆款文案生成助手</h2>
           <p class="agent-desc">专注于微信视频号短视频爆款文案的生成助手。</p>
         </div>
-        <span class="card-footer">
-          进入智能体
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
-          </svg>
-        </span>
-      </a>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7637330277958074420?bot_id=true&amp;bid=6jvaf2bds201k" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7637330277958074420" data-agent-title="微信视频号短视频爆款文案生成助手">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
     </section>
 
     <p class="note">主题随时间流转 · 07:00 / 19:00</p>
   </main>
 
+  <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
   <script>
     const root = document.documentElement;
     const statusEl = document.getElementById("themeStatus");
@@ -994,6 +1090,8 @@
       light: document.getElementById("lightTheme"),
       dark: document.getElementById("darkTheme")
     };
+    const cozeExperienceToken = "pat_wPc5vqQxulY3iPw8niz9yik9CMCQlkS1VDWuwghRTYLOKcaljBQX5BahumDEZdEF";
+    const cozeExperienceClients = new Map();
 
     let themeMode = localStorage.getItem("coze-agent-theme") || "auto";
 
@@ -1027,6 +1125,63 @@
         themeMode = mode;
         localStorage.setItem("coze-agent-theme", themeMode);
         applyTheme();
+      });
+    });
+
+    function tokenIsReady() {
+      return cozeExperienceToken && !cozeExperienceToken.includes("********");
+    }
+
+    function showTokenNotice() {
+      alert("请先把 index_1.html 里的 cozeExperienceToken 替换成真实 Coze PAT，再使用体验版。");
+    }
+
+    function openExperienceChat(botId, title) {
+      if (!tokenIsReady()) {
+        showTokenNotice();
+        return;
+      }
+
+      if (!window.CozeWebSDK) {
+        alert("Coze SDK 暂未加载完成，请稍后再试。");
+        return;
+      }
+
+      if (!cozeExperienceClients.has(botId)) {
+        cozeExperienceClients.set(botId, new CozeWebSDK.WebChatClient({
+          config: {
+            bot_id: botId
+          },
+          componentProps: {
+            title: title || "Coze"
+          },
+          auth: {
+            type: "token",
+            token: cozeExperienceToken,
+            onRefreshToken: function () {
+              return cozeExperienceToken;
+            }
+          }
+        }));
+      }
+
+      const client = cozeExperienceClients.get(botId);
+      const actionNames = ["show", "open", "toggle", "showChatBot", "openChatBot"];
+      const actionName = actionNames.find((name) => typeof client[name] === "function");
+
+      if (actionName) {
+        client[actionName]();
+      }
+    }
+
+    document.querySelectorAll(".agent-action--secondary").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.dataset.experienceStatus === "pending") {
+          alert("体验版暂未开通，敬请期待！");
+          return;
+        }
+
+        openExperienceChat(button.dataset.botId, button.dataset.agentTitle);
       });
     });
 
