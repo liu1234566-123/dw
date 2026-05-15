@@ -1136,7 +1136,57 @@
       alert("请先把 index_1.html 里的 cozeExperienceToken 替换成真实 Coze PAT，再使用体验版。");
     }
 
-    function openExperienceChat(botId, title) {
+    function allowCozeMediaFrames() {
+      document.querySelectorAll("iframe").forEach((frame) => {
+        const allow = frame.getAttribute("allow") || "";
+        const permissions = ["microphone", "camera", "autoplay", "clipboard-write"];
+        const nextAllow = permissions.reduce((value, permission) => {
+          return value.includes(permission) ? value : `${value}; ${permission}`;
+        }, allow).replace(/^;\s*/, "");
+
+        frame.setAttribute("allow", nextAllow);
+      });
+    }
+
+    function isWeChatBrowser() {
+      return /MicroMessenger/i.test(navigator.userAgent);
+    }
+
+    async function requestMicrophonePermission() {
+      if (!window.isSecureContext) {
+        alert("语音输入需要 HTTPS 安全环境。请使用 https://mx.xlzy.org 打开网页后再试。");
+        return false;
+      }
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        const message = isWeChatBrowser()
+          ? "微信内置浏览器当前没有弹出网页麦克风授权。请点击右上角菜单，选择在浏览器中打开 https://mx.xlzy.org 后再使用语音。"
+          : "当前浏览器不支持网页麦克风授权。建议用手机系统浏览器打开 https://mx.xlzy.org 后再试。";
+
+        alert(message);
+        return false;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((track) => track.stop());
+        return true;
+      } catch (error) {
+        const blocked = error && (error.name === "NotAllowedError" || error.name === "PermissionDeniedError");
+        let message = blocked
+          ? "麦克风权限未开启。请允许此网页使用麦克风，然后重新进入体验版。"
+          : "无法打开麦克风。请确认麦克风未被其他应用占用，并用手机系统浏览器重试。";
+
+        if (isWeChatBrowser()) {
+          message = "微信内置浏览器没有成功调起麦克风授权。请点击右上角菜单，选择在浏览器中打开 https://mx.xlzy.org 后再使用语音。";
+        }
+
+        alert(message);
+        return false;
+      }
+    }
+
+    async function openExperienceChat(botId, title) {
       if (!tokenIsReady()) {
         showTokenNotice();
         return;
@@ -1144,6 +1194,11 @@
 
       if (!window.CozeWebSDK) {
         alert("Coze SDK 暂未加载完成，请稍后再试。");
+        return;
+      }
+
+      const microphoneReady = await requestMicrophonePermission();
+      if (!microphoneReady) {
         return;
       }
 
@@ -1185,12 +1240,16 @@
         }));
       }
 
+      allowCozeMediaFrames();
+
       const client = cozeExperienceClients.get(botId);
       const actionNames = ["show", "open", "toggle", "showChatBot", "openChatBot"];
       const actionName = actionNames.find((name) => typeof client[name] === "function");
 
       if (actionName) {
         client[actionName]();
+        setTimeout(allowCozeMediaFrames, 300);
+        setTimeout(allowCozeMediaFrames, 1000);
       }
     }
 
