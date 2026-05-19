@@ -26,8 +26,8 @@
     [data-theme="dark"] {
       --bg: #100f17;
       --bg-2: #172521;
-      --panel: rgba(21, 23, 30, 0.58);
-      --panel-strong: rgba(27, 29, 38, 0.86);
+      --panel: rgba(21, 23, 30, 0.72);
+      --panel-strong: rgba(27, 29, 38, 0.92);
       --text: #f7efe6;
       --muted: #c0b7ac;
       --line: rgba(255, 239, 220, 0.17);
@@ -40,13 +40,37 @@
       color-scheme: dark;
     }
 
+    [data-theme="dark"] body {
+      background:
+        linear-gradient(90deg, rgba(10, 9, 13, 0.94) 0%, rgba(13, 12, 17, 0.88) 42%, rgba(18, 16, 20, 0.78) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(12, 10, 12, 0.68)),
+        url("./agent-background.jpg") center / cover no-repeat fixed;
+      background-attachment: fixed, fixed, fixed;
+    }
+
+    [data-theme="dark"] body::before {
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 34%, rgba(0, 0, 0, 0.3)),
+        radial-gradient(circle at 18% 16%, rgba(255, 239, 205, 0.08), transparent 24%),
+        radial-gradient(circle at 78% 18%, rgba(217, 191, 126, 0.08), transparent 30%);
+      mix-blend-mode: normal;
+      opacity: 0.9;
+    }
+
+    [data-theme="dark"] body::after {
+      background-image:
+        linear-gradient(rgba(255, 239, 220, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 239, 220, 0.04) 1px, transparent 1px);
+      opacity: 0.1;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     html {
       min-height: 100%;
-      background: var(--bg);
+      background: #efe4d5;
     }
 
     body {
@@ -55,11 +79,10 @@
       font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background:
-        linear-gradient(118deg, color-mix(in srgb, var(--accent) 20%, transparent) 0 18%, transparent 18% 100%),
-        linear-gradient(154deg, transparent 0 38%, color-mix(in srgb, var(--accent-2) 18%, transparent) 38% 58%, transparent 58% 100%),
-        linear-gradient(26deg, color-mix(in srgb, var(--accent-3) 14%, transparent), transparent 42%),
-        linear-gradient(135deg, var(--bg), var(--bg-2));
-      background-attachment: fixed;
+        linear-gradient(90deg, rgba(255, 250, 242, 0.9) 0%, rgba(255, 250, 242, 0.68) 42%, rgba(255, 250, 242, 0.36) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(235, 220, 202, 0.2)),
+        url("./agent-background.jpg") center / cover no-repeat fixed;
+      background-attachment: fixed, fixed, fixed;
       transition: background 500ms ease, color 300ms ease;
       overflow-x: hidden;
     }
@@ -74,19 +97,20 @@
 
     body::before {
       background:
-        repeating-linear-gradient(105deg, transparent 0 44px, var(--veil) 45px 46px, transparent 47px 116px),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 36%, rgba(255, 255, 255, 0.1));
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 34%, rgba(255, 255, 255, 0.16)),
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.42), transparent 24%),
+        radial-gradient(circle at 78% 18%, rgba(196, 163, 107, 0.2), transparent 30%);
       mix-blend-mode: soft-light;
-      opacity: 0.62;
+      opacity: 0.72;
     }
 
     body::after {
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-      background-size: 72px 72px;
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 84px 84px;
       mask-image: linear-gradient(to bottom, transparent, black 20%, transparent 88%);
-      opacity: 0.28;
+      opacity: 0.16;
     }
 
     a {
@@ -139,6 +163,13 @@
       width: 24px;
       height: 24px;
       stroke: currentColor;
+    }
+
+    .brand-mark img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      display: block;
     }
 
     h1 {
@@ -816,15 +847,11 @@
     <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3l7.5 4.3v8.4L12 20l-7.5-4.3V7.3L12 3z"></path>
-            <path d="M8.5 10.2h7"></path>
-            <path d="M8.5 13.8h4.7"></path>
-          </svg>
+          <img src="./xinle-logo.png" alt="">
         </div>
         <div>
-          <h1>Coze 智能体导航</h1>
-          <p class="subtitle">你的 Coze 智能体入口集合。</p>
+          <h1>心乐之予</h1>
+          <p class="subtitle">高阶智能体集合</p>
         </div>
       </div>
 
@@ -852,14 +879,15 @@
       <div class="lead-panel">
         <div class="lead-content">
           <div class="eyebrow">AGENT COLLECTION</div>
-          <p class="lead-title">把专业智能体，放在一个顺手的位置。</p>
-          <p class="lead-copy">东方智慧疗愈、美妆穿搭、餐饮推荐、地产咨询与内容创作，在同一个清爽、有质感的界面里自然展开。</p>
+          <p class="lead-title" style="font-size: 80px;">心乐之予</p><br>
+	<p class="lead-title" style="font-size: 80px;">高阶智能体</p>
+          <p class="lead-copy">帮扶一亿创业者幸福创业，打造幸福创业孵化平台。愿天下无债，天下无疾，天下皆美。借疗愈修心，以商业创富，商为器，道为魂，心为本。</p>
         </div>
       </div>
       <aside class="metric-panel" aria-label="智能体数量">
         <div class="metric">
-          <b>10</b>
-          <span>个已收录智能体，覆盖疗愈、美妆、穿搭、餐饮、地产、审批、运势、销售与内容创作场景。</span>
+          <b>12</b>
+          <span>个已收录智能体，覆盖疗愈、美妆、穿搭、餐饮、地产、审批、运势、销售、选题与内容创作场景。</span>
         </div>
         <div class="action-stack">
           <a class="guide-link" href="https://dcnlfzgyd9mm.feishu.cn/wiki/JlYFwrQdPi0G5Zk6UAocixDAnCo?from=from_copylink" target="_blank" rel="noopener noreferrer">
@@ -1160,6 +1188,62 @@
           </button>
         </div>
       </article>
+
+      <article class="agent-card">
+        <div class="avatar-wrap">
+          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/264312b8146e40578ff87955a26fc5c8~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781666964&amp;x-signature=QjfqYWMviCJpeAD7qi032YXj9X0%3D" alt="爆款选题智能体头像">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">爆款选题</span>
+          <span class="agent-type">短视频</span>
+        </div>
+        <div>
+          <h2 class="agent-name">爆款选题智能体</h2>
+          <p class="agent-desc">你只需要输入“行业”，我就会自动从多个维度帮你生成爆款短视频选题。</p>
+        </div>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7641060369112711202?bot_id=true&amp;bid=6k2k51s3s8g00" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7641060369112711202" data-agent-title="爆款选题智能体">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="agent-card">
+        <div class="avatar-wrap">
+          <img src="https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/6ec2870a82bd4db4bb6dc295f0248a3e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781676382&amp;x-signature=AZqFWzuQe2FMYep%2BkQGGZfGl%2Fdw%3D" alt="文案爆款内容拆解大师头像">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">爆款文案</span>
+          <span class="agent-type">内容拆解</span>
+        </div>
+        <div>
+          <h2 class="agent-name">文案爆款内容拆解大师</h2>
+          <p class="agent-desc">精通网络爆款文案逻辑、营销心理、内容策划与流量机制。</p>
+        </div>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7641069643557240886?bot_id=true&amp;bid=6k2lc14b80g0q" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7641069643557240886" data-agent-title="文案爆款内容拆解大师">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
     </section>
 
     <p class="note">主题随时间流转 · 07:00 / 19:00</p>
@@ -1215,6 +1299,14 @@
       },
       "7640787360229769216": {
         token: "pat_DRk9HFN4nfqoWvtk7UM3ncPX4CQbxNxreRkh5e5MdvvPYzJ0CVLjONAoZ5flDn5X",
+        sdkUrl: cnCozeSdkUrl
+      },
+      "7641060369112711202": {
+        token: "pat_H1UVxZzI9uPBPFNLGy0vLPfqPu72Y5SHo8azuK0gdBbQxGNw8IhqMTzD1SV0Jrw8",
+        sdkUrl: cnCozeSdkUrl
+      },
+      "7641069643557240886": {
+        token: "pat_H1UVxZzI9uPBPFNLGy0vLPfqPu72Y5SHo8azuK0gdBbQxGNw8IhqMTzD1SV0Jrw8",
         sdkUrl: cnCozeSdkUrl
       }
     };
