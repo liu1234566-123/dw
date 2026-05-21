@@ -1286,6 +1286,15 @@
     const cozeExperienceClients = new Map();
     let activeCozeSdkUrl = cnCozeSdkUrl;
 
+    function getOrCreateUserId() {
+      let uid = localStorage.getItem("coze-visitor-id");
+      if (!uid) {
+        uid = "visitor_" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+        localStorage.setItem("coze-visitor-id", uid);
+      }
+      return uid;
+    }
+
     let themeMode = localStorage.getItem("coze-agent-theme") || "auto";
 
     function themeByTime(date = new Date()) {
@@ -1430,7 +1439,8 @@
       if (!cozeExperienceClients.has(botId)) {
         cozeExperienceClients.set(botId, new CozeWebSDK.WebChatClient({
           config: {
-            bot_id: botId
+            bot_id: botId,
+            user_id: getOrCreateUserId()
           },
           componentProps: {
             title: title || "Coze"
