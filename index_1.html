@@ -26,8 +26,8 @@
     [data-theme="dark"] {
       --bg: #100f17;
       --bg-2: #172521;
-      --panel: rgba(21, 23, 30, 0.72);
-      --panel-strong: rgba(27, 29, 38, 0.92);
+      --panel: rgba(21, 23, 30, 0.58);
+      --panel-strong: rgba(27, 29, 38, 0.86);
       --text: #f7efe6;
       --muted: #c0b7ac;
       --line: rgba(255, 239, 220, 0.17);
@@ -38,30 +38,6 @@
       --focus: rgba(143, 209, 195, 0.32);
       --veil: rgba(255, 255, 255, 0.08);
       color-scheme: dark;
-    }
-
-    [data-theme="dark"] body {
-      background:
-        linear-gradient(90deg, rgba(10, 9, 13, 0.94) 0%, rgba(13, 12, 17, 0.88) 42%, rgba(18, 16, 20, 0.78) 100%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(12, 10, 12, 0.68)),
-        url("./agent-background.jpg") center / cover no-repeat fixed;
-      background-attachment: fixed, fixed, fixed;
-    }
-
-    [data-theme="dark"] body::before {
-      background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 34%, rgba(0, 0, 0, 0.3)),
-        radial-gradient(circle at 18% 16%, rgba(255, 239, 205, 0.08), transparent 24%),
-        radial-gradient(circle at 78% 18%, rgba(217, 191, 126, 0.08), transparent 30%);
-      mix-blend-mode: normal;
-      opacity: 0.9;
-    }
-
-    [data-theme="dark"] body::after {
-      background-image:
-        linear-gradient(rgba(255, 239, 220, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 239, 220, 0.04) 1px, transparent 1px);
-      opacity: 0.1;
     }
 
     * {
@@ -163,13 +139,6 @@
       width: 24px;
       height: 24px;
       stroke: currentColor;
-    }
-
-    .brand-mark img {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-      display: block;
     }
 
     h1 {
@@ -847,7 +816,11 @@
     <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true">
-          <img src="./xinle-logo.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l7.5 4.3v8.4L12 20l-7.5-4.3V7.3L12 3z"></path>
+            <path d="M8.5 10.2h7"></path>
+            <path d="M8.5 13.8h4.7"></path>
+          </svg>
         </div>
         <div>
           <h1>心乐之予</h1>
@@ -915,7 +888,7 @@
     <section class="grid" id="agents" aria-label="智能体列表">
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/986f9d3529b44d0cb31f8cce8fa48dad~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780566622&amp;x-signature=CpZS4o2gzN5iZOhJZ69IzUQOYjI%3D" alt="东方智慧疗愈美希老师头像">
+          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/9cc371e2239947169ef8c1471f6697e4~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918099&amp;x-signature=blrwOZXs1D2oGABTcg164JxLvCs%3D" alt="东方智慧疗愈美希老师头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">东方疗愈</span>
@@ -942,14 +915,14 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/165284e2fd584fb79c503c848c02ab63~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780565420&amp;x-signature=KAyro7sc75bRfTAo5fJ3%2FypkD10%3D" alt="美妆小助手头像">
+          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/165284e2fd584fb79c503c848c02ab63~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780565420&amp;x-signature=KAyro7sc75bRfTAo5fJ3%2FypkD10%3D" alt="美妆智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">美妆护肤</span>
         </div>
         <div>
-          <h2 class="agent-name">美妆小助手</h2>
-          <p class="agent-desc">能帮助你护肤、美妆的专业小助手。</p>
+          <h2 class="agent-name">美妆智能体</h2>
+          <p class="agent-desc">能帮助你护肤、美妆的专业智能体。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7615246755881861154?bot_id=true&amp;bid=6judo5fpk3019" target="_blank" rel="noopener noreferrer">
@@ -958,7 +931,7 @@
               <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
             </svg>
           </a>
-          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7615246755881861154" data-agent-title="美妆小助手">
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7615246755881861154" data-agent-title="美妆智能体">
             体验版
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
@@ -977,7 +950,7 @@
         </div>
         <div>
           <h2 class="agent-name">杭州尚食居富阳菜智能体</h2>
-          <p class="agent-desc">杭州尚食居富阳菜小助手，能帮你介绍富阳菜，帮你定餐位。</p>
+          <p class="agent-desc">杭州尚食居富阳菜智能体，能帮你介绍富阳菜，帮你定餐位。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7629304877159727140?bot_id=true" target="_blank" rel="noopener noreferrer">
@@ -997,14 +970,14 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/052f927aac96459d83d570095c8bc11e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713667&amp;x-signature=2rA1y4oz4IOVO9FtX%2Bceux8Vjfk%3D" alt="欣野餐饮小助手头像">
+          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/052f927aac96459d83d570095c8bc11e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713667&amp;x-signature=2rA1y4oz4IOVO9FtX%2Bceux8Vjfk%3D" alt="欣野餐饮智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">餐饮推荐</span>
           <span class="agent-type">餐饮订位</span>
         </div>
         <div>
-          <h2 class="agent-name">欣野餐饮小助手</h2>
+          <h2 class="agent-name">欣野餐饮智能体</h2>
           <p class="agent-desc">欣野餐饮的点餐助手能推荐合适的菜肴和定餐位。</p>
         </div>
         <div class="card-actions">
@@ -1014,7 +987,7 @@
               <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
             </svg>
           </a>
-          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7624038966223863848" data-agent-title="欣野餐饮小助手">
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7624038966223863848" data-agent-title="欣野餐饮智能体">
             体验版
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
@@ -1025,14 +998,14 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/6361a5b011124fe8ab380a9f73a6f837~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780737684&amp;x-signature=Sn6MqTq1cwCyVVoF6gKa0xE7js8%3D" alt="服饰穿搭推荐小助手头像">
+          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/2b93706349dd4091a1118f3a4c8d3540~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918215&amp;x-signature=Bwy4Acg4qLePd6fq3OY9Jd4iIk8%3D" alt="服饰穿搭推荐智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">服饰穿搭</span>
         </div>
         <div>
-          <h2 class="agent-name">服饰穿搭推荐小助手</h2>
-          <p class="agent-desc">一个能帮助您服饰穿搭推荐的小助手。</p>
+          <h2 class="agent-name">服饰穿搭推荐智能体</h2>
+          <p class="agent-desc">一个能帮助您服饰穿搭推荐的智能体。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7615068611492823050?bot_id=true&amp;bid=6jv2p5hr85g1i" target="_blank" rel="noopener noreferrer">
@@ -1041,7 +1014,7 @@
               <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
             </svg>
           </a>
-          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7615068611492823050" data-agent-title="服饰穿搭推荐小助手">
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7615068611492823050" data-agent-title="服饰穿搭推荐智能体">
             体验版
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
@@ -1052,7 +1025,7 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://lf16-coze-tos-sign.oceanapi-i18n.com/obj/ocean-cloud-tos-sg/FileBizType.BIZ_BOT_ICON/7634472087705797685_1777539251922514101_sxUgbUVmgm.jpg?x-expires=1778751858&amp;x-signature=Jad1UPiv17bfbbPnpKYIPgZ92k4%3D" alt="Tianmen Real Estate Intelligent Agent avatar">
+          <img src="https://raw.githubusercontent.com/liu1234566-123/dw/refs/heads/main/%E9%98%BF%E6%9B%BC%E5%A7%90.jpg" alt="Tianmen Real Estate Intelligent Agent avatar">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">地产咨询</span>
@@ -1079,7 +1052,7 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ee90a33789284601ab176814b8c393d7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780800553&amp;x-signature=VBhoPye2g3c7VF9CrkH2T7mDGFs%3D" alt="微信视频号短视频爆款文案生成助手头像">
+          <img src="https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/afc4fa48d2a942f6b6a6d3295b18efdd~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1781919451&x-signature=hMLVEwh1%2BR%2BzfWXPRtj9VCH0o2k%3D" alt="微信视频号短视频爆款文案生成助手头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">视频文案</span>
@@ -1107,7 +1080,7 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ce7ff636dd6247f3b4f867a9f5a1b466~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781580574&amp;x-signature=XKx2r1KrB83GejVw3MeZ66nk9uQ%3D" alt="报销审批智能体头像">
+          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/aa14fe740084457a85b586ae6329bf08~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1781918263&x-signature=jfko8VTKELIFjXHHwavDXeRa3u8%3D" alt="报销审批智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">报销审批</span>
@@ -1135,14 +1108,14 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/93cee0445c224e4c91d235bd082129f8~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781600120&amp;x-signature=333t8os4E3mnrbHh3ENPlkpOmTU%3D" alt="今日运势小助手头像">
+          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/90b6b2c3bd2f4d98bf58db9fe0c25493~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1781918149&x-signature=KRrZDH8nOKRt08yDcwB%2FGMoEa3E%3D" alt="今日运势智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">今日运势</span>
           <span class="agent-type">生活建议</span>
         </div>
         <div>
-          <h2 class="agent-name">今日运势小助手</h2>
+          <h2 class="agent-name">今日运势智能体</h2>
           <p class="agent-desc">给出合理的建议给用户，帮助用户合理安排。</p>
         </div>
         <div class="card-actions">
@@ -1152,7 +1125,7 @@
               <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
             </svg>
           </a>
-          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7640759330190639131" data-agent-title="今日运势小助手">
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7640759330190639131" data-agent-title="今日运势智能体">
             体验版
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
@@ -1163,7 +1136,7 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/a36b6fb274e743448744cadc8a714b40~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781603627&amp;x-signature=7zZKnAywSAgiH4yhQW3rgjm2pe0%3D" alt="超级AI销冠秀姐头像">
+          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/598779d83b544679a534ec7cebd4bdde~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781917982&amp;x-signature=1Kf29LkSYMxwRP5ZLW92xHgMU4o%3D" alt="超级AI销冠秀姐头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">销售话术</span>
@@ -1191,7 +1164,7 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/264312b8146e40578ff87955a26fc5c8~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781666964&amp;x-signature=QjfqYWMviCJpeAD7qi032YXj9X0%3D" alt="爆款选题智能体头像">
+          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/c3a6f192cc8b4c97a7747bd75b984630~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918427&amp;x-signature=iJgRW2F0DoxuhOkHWLCePo0MSPU%3D" alt="爆款选题智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">爆款选题</span>
@@ -1219,7 +1192,7 @@
 
       <article class="agent-card">
         <div class="avatar-wrap">
-          <img src="https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/6ec2870a82bd4db4bb6dc295f0248a3e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781676382&amp;x-signature=AZqFWzuQe2FMYep%2BkQGGZfGl%2Fdw%3D" alt="文案爆款内容拆解大师头像">
+          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ccdffce57da448b991c4732f8b7b43eb~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918337&amp;x-signature=fSVBVP7CPziV8OOE7yIpLegb1y4%3D" alt="文案爆款内容拆解大师头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">爆款文案</span>
