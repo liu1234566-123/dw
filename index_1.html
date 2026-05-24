@@ -40,6 +40,33 @@
       color-scheme: dark;
     }
 
+    [data-theme="dark"] html,
+    html:has([data-theme="dark"]) {
+      background: #14131a;
+    }
+
+    [data-theme="dark"] body {
+      background:
+        linear-gradient(90deg, rgba(20, 18, 28, 0.9) 0%, rgba(20, 18, 28, 0.68) 42%, rgba(20, 18, 28, 0.36) 100%),
+        linear-gradient(180deg, rgba(18, 16, 24, 0.48), rgba(22, 20, 30, 0.2)),
+        url("./agent-background.jpg") center / cover no-repeat fixed;
+    }
+
+    [data-theme="dark"] body::before {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 34%, rgba(255, 255, 255, 0.03)),
+        radial-gradient(circle at 18% 16%, rgba(143, 209, 195, 0.08), transparent 24%),
+        radial-gradient(circle at 78% 18%, rgba(217, 191, 126, 0.06), transparent 30%);
+      opacity: 1;
+    }
+
+    [data-theme="dark"] body::after {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      opacity: 0.08;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -135,10 +162,11 @@
       flex: 0 0 auto;
     }
 
-    .brand-mark svg {
-      width: 24px;
-      height: 24px;
-      stroke: currentColor;
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
     }
 
     h1 {
@@ -816,11 +844,7 @@
     <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3l7.5 4.3v8.4L12 20l-7.5-4.3V7.3L12 3z"></path>
-            <path d="M8.5 10.2h7"></path>
-            <path d="M8.5 13.8h4.7"></path>
-          </svg>
+          <img src="xinle-logo.png" alt="心乐之予 Logo">
         </div>
         <div>
           <h1>心乐之予</h1>
@@ -1143,8 +1167,8 @@
           <span class="agent-type">内容编辑</span>
         </div>
         <div>
-          <h2 class="agent-name">超级AI销冠秀姐</h2>
-          <p class="agent-desc">一个能在各行各业帮助你编辑销售话术的专业大佬-秀姐。</p>
+          <h2 class="agent-name">超级AI销冠美希姐</h2>
+          <p class="agent-desc">一个能在各行各业帮助你编辑销售话术的专业大佬-美希姐。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7640787360229769216?bot_id=true&amp;bid=6k2cfi02g4g16" target="_blank" rel="noopener noreferrer">
