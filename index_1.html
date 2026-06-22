@@ -1,4 +1,4 @@
-<!doctype html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
@@ -837,7 +837,40 @@
         max-width: calc(100% - 124px);
       }
     }
-  </style>
+.category-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 24px;
+  flex-wrap: wrap;
+}
+.category-btn {
+  min-height: 40px;
+  padding: 0 22px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 240ms ease, color 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+  backdrop-filter: blur(12px);
+}
+.category-btn:hover {
+  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--line));
+  color: var(--text);
+}
+.category-btn.active {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 18%, transparent), var(--panel-strong));
+  border-color: color-mix(in srgb, var(--accent-2) 56%, var(--line));
+  color: var(--accent-2);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-2) 16%, transparent);
+}
+.agent-card.hidden {
+  display: none;
+}
+</style>
 </head>
 <body>
   <main class="shell">
@@ -909,17 +942,23 @@
       </aside>
     </section>
 
-    <section class="grid" id="agents" aria-label="智能体列表">
-      <article class="agent-card">
+    <nav class="category-nav" aria-label="智能体分类筛选">
+  <button class="category-btn active" data-category="all">全部</button>
+  <button class="category-btn" data-category="life">生活</button>
+  <button class="category-btn" data-category="work">工作</button>
+</nav>
+
+    <section class="grid" id="agents">
+      <article class="agent-card" data-category="life">
         <div class="avatar-wrap">
-          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/9cc371e2239947169ef8c1471f6697e4~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918099&amp;x-signature=blrwOZXs1D2oGABTcg164JxLvCs%3D" alt="东方智慧疗愈美希老师头像">
+          <img src="xinle-logo.png" alt="东方智慧疗愈美希老师头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">东方疗愈</span>
         </div>
         <div>
           <h2 class="agent-name">东方智慧疗愈美希老师</h2>
-          <p class="agent-desc">美希老师的 AI 分身，一个做东方智慧疗愈的行者。</p>
+          <p class="agent-desc">美希老师的AI分身，一个做东方智慧疗愈的行者。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7617679993673859110?bot_id=true&amp;bid=6juvkub54401k" target="_blank" rel="noopener noreferrer">
@@ -936,10 +975,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="life">
         <div class="avatar-wrap">
-          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/165284e2fd584fb79c503c848c02ab63~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780565420&amp;x-signature=KAyro7sc75bRfTAo5fJ3%2FypkD10%3D" alt="美妆智能体头像">
+          <img src="xinle-logo.png" alt="美妆智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">美妆护肤</span>
@@ -963,10 +1001,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="life">
         <div class="avatar-wrap">
-          <img src="https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/402d64f87e1c4f828c41baf98ffe0077~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713502&amp;x-signature=Bx4zLddDPl%2FFzVWE4Qij3e2iD3U%3D" alt="杭州尚食居富阳菜智能体头像">
+          <img src="xinle-logo.png" alt="杭州尚食居富阳菜智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">餐饮推荐</span>
@@ -991,10 +1028,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="life">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/052f927aac96459d83d570095c8bc11e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1780713667&amp;x-signature=2rA1y4oz4IOVO9FtX%2Bceux8Vjfk%3D" alt="欣野餐饮智能体头像">
+          <img src="xinle-logo.png" alt="欣野餐饮智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">餐饮推荐</span>
@@ -1002,7 +1038,7 @@
         </div>
         <div>
           <h2 class="agent-name">欣野餐饮智能体</h2>
-          <p class="agent-desc">欣野餐饮的点餐助手能推荐合适的菜肴和定餐位。</p>
+          <p class="agent-desc">欣野餐饮的点餐助手能推荐合适的菜肴和定餐位</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7624038966223863848?bot_id=true" target="_blank" rel="noopener noreferrer">
@@ -1019,10 +1055,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="life">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/2b93706349dd4091a1118f3a4c8d3540~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918215&amp;x-signature=Bwy4Acg4qLePd6fq3OY9Jd4iIk8%3D" alt="服饰穿搭推荐智能体头像">
+          <img src="xinle-logo.png" alt="服饰穿搭推荐智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">服饰穿搭</span>
@@ -1046,8 +1081,7 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="work">
         <div class="avatar-wrap">
           <img src="https://raw.githubusercontent.com/liu1234566-123/dw/refs/heads/main/%E9%98%BF%E6%9B%BC%E5%A7%90.jpg" alt="Tianmen Real Estate Intelligent Agent avatar">
         </div>
@@ -1073,10 +1107,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="work">
         <div class="avatar-wrap">
-          <img src="https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/afc4fa48d2a942f6b6a6d3295b18efdd~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1781919451&x-signature=hMLVEwh1%2BR%2BzfWXPRtj9VCH0o2k%3D" alt="微信视频号短视频爆款文案生成助手头像">
+          <img src="xinle-logo.png" alt="微信视频号短视频爆款文案生成助手头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">视频文案</span>
@@ -1101,10 +1134,36 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="work">
         <div class="avatar-wrap">
-          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/aa14fe740084457a85b586ae6329bf08~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1781918263&x-signature=jfko8VTKELIFjXHHwavDXeRa3u8%3D" alt="报销审批智能体头像">
+          <img src="xinle-logo.png" alt="IP定位生成智能体头像">
+        </div>
+        <div class="agent-types" aria-label="智能体类型">
+          <span class="agent-type">IP定位</span>
+          <span class="agent-type">内容创作</span>
+        </div>
+        <div>
+          <h2 class="agent-name">IP定位生成智能体</h2>
+          <p class="agent-desc">根据你的行业，想做的方向，所在地，给你最贴切的IP定位。</p>
+        </div>
+        <div class="card-actions">
+          <a class="agent-action agent-action--primary" href="https://www.coze.cn/s/TJD34nAvG8k/" target="_blank" rel="noopener noreferrer">
+            满血版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+          <button class="agent-action agent-action--secondary" type="button" data-bot-id="7648849259227332643" data-agent-title="IP定位生成智能体">
+            体验版
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
+<article class="agent-card" data-category="work">
+        <div class="avatar-wrap">
+          <img src="xinle-logo.png" alt="报销审批智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">报销审批</span>
@@ -1129,10 +1188,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="life">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/90b6b2c3bd2f4d98bf58db9fe0c25493~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1781918149&x-signature=KRrZDH8nOKRt08yDcwB%2FGMoEa3E%3D" alt="今日运势智能体头像">
+          <img src="xinle-logo.png" alt="今日运势智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">今日运势</span>
@@ -1157,10 +1215,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="work">
         <div class="avatar-wrap">
-          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/598779d83b544679a534ec7cebd4bdde~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781917982&amp;x-signature=1Kf29LkSYMxwRP5ZLW92xHgMU4o%3D" alt="超级AI销冠秀姐头像">
+          <img src="xinle-logo.png" alt="超级AI销冠秀姐头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">销售话术</span>
@@ -1168,7 +1225,7 @@
         </div>
         <div>
           <h2 class="agent-name">超级AI销冠美希姐</h2>
-          <p class="agent-desc">一个能在各行各业帮助你编辑销售话术的专业大佬-美希姐。</p>
+          <p class="agent-desc">一个能在各行各业帮助你编辑销售话术的专业大佬-秀姐。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7640787360229769216?bot_id=true&amp;bid=6k2cfi02g4g16" target="_blank" rel="noopener noreferrer">
@@ -1185,10 +1242,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="work">
         <div class="avatar-wrap">
-          <img src="https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/c3a6f192cc8b4c97a7747bd75b984630~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918427&amp;x-signature=iJgRW2F0DoxuhOkHWLCePo0MSPU%3D" alt="爆款选题智能体头像">
+          <img src="xinle-logo.png" alt="爆款选题智能体头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">爆款选题</span>
@@ -1196,7 +1252,7 @@
         </div>
         <div>
           <h2 class="agent-name">爆款选题智能体</h2>
-          <p class="agent-desc">你只需要输入“行业”，我就会自动从多个维度帮你生成爆款短视频选题。</p>
+          <p class="agent-desc">你只需要输入“行业”，我就会自动从以下维度帮你生成爆款短视频选题。</p>
         </div>
         <div class="card-actions">
           <a class="agent-action agent-action--primary" href="https://www.coze.cn/store/agent/7641060369112711202?bot_id=true&amp;bid=6k2k51s3s8g00" target="_blank" rel="noopener noreferrer">
@@ -1213,10 +1269,9 @@
           </button>
         </div>
       </article>
-
-      <article class="agent-card">
+<article class="agent-card" data-category="work">
         <div class="avatar-wrap">
-          <img src="https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ccdffce57da448b991c4732f8b7b43eb~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&amp;x-expires=1781918337&amp;x-signature=fSVBVP7CPziV8OOE7yIpLegb1y4%3D" alt="文案爆款内容拆解大师头像">
+          <img src="xinle-logo.png" alt="文案爆款内容拆解大师头像">
         </div>
         <div class="agent-types" aria-label="智能体类型">
           <span class="agent-type">爆款文案</span>
@@ -1241,6 +1296,7 @@
           </button>
         </div>
       </article>
+
     </section>
 
     <p class="note">主题随时间流转 · 07:00 / 19:00</p>
@@ -1259,11 +1315,15 @@
     const overseasCozeSdkUrl = "https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.6/libs/oversea/index.js";
     const cozeExperienceConfigs = {
       "7617679993673859110": {
-        token: "pat_DRk9HFN4nfqoWvtk7UM3ncPX4CQbxNxreRkh5e5MdvvPYzJ0CVLjONAoZ5flDn5X",
+        token: "pat_pqrxdFcbDCRIPjyGwOchZN2UTFi01ErYNretbMqpz5gpuL3I5t0GLLVt2AOWfLxN",
+        sdkUrl: cnCozeSdkUrl
+      },
+      "7648849259227332643": {
+        token: "pat_IyI5OSeu7bS4DnG1t57woF5qUJXFf6R7NR29cVWhY4rcKaWky04l2p5EMwUZ1vLO",
         sdkUrl: cnCozeSdkUrl
       },
       "7615246755881861154": {
-        token: "pat_DRk9HFN4nfqoWvtk7UM3ncPX4CQbxNxreRkh5e5MdvvPYzJ0CVLjONAoZ5flDn5X",
+        token: "pat_pqrxdFcbDCRIPjyGwOchZN2UTFi01ErYNretbMqpz5gpuL3I5t0GLLVt2AOWfLxN",
         sdkUrl: cnCozeSdkUrl
       },
       "7629304877159727140": {
@@ -1275,7 +1335,7 @@
         sdkUrl: cnCozeSdkUrl
       },
       "7615068611492823050": {
-        token: "pat_DRk9HFN4nfqoWvtk7UM3ncPX4CQbxNxreRkh5e5MdvvPYzJ0CVLjONAoZ5flDn5X",
+        token: "pat_pqrxdFcbDCRIPjyGwOchZN2UTFi01ErYNretbMqpz5gpuL3I5t0GLLVt2AOWfLxN",
         sdkUrl: cnCozeSdkUrl
       },
       "7634466437574459397": {
@@ -1283,27 +1343,27 @@
         sdkUrl: overseasCozeSdkUrl
       },
       "7637330277958074420": {
-        token: "pat_DRk9HFN4nfqoWvtk7UM3ncPX4CQbxNxreRkh5e5MdvvPYzJ0CVLjONAoZ5flDn5X",
+        token: "pat_pqrxdFcbDCRIPjyGwOchZN2UTFi01ErYNretbMqpz5gpuL3I5t0GLLVt2AOWfLxN",
         sdkUrl: cnCozeSdkUrl
       },
       "7640677947770617910": {
-        token: "pat_H1UVxZzI9uPBPFNLGy0vLPfqPu72Y5SHo8azuK0gdBbQxGNw8IhqMTzD1SV0Jrw8",
+        token: "pat_IyI5OSeu7bS4DnG1t57woF5qUJXFf6R7NR29cVWhY4rcKaWky04l2p5EMwUZ1vLO",
         sdkUrl: cnCozeSdkUrl
       },
       "7640759330190639131": {
-        token: "pat_H1UVxZzI9uPBPFNLGy0vLPfqPu72Y5SHo8azuK0gdBbQxGNw8IhqMTzD1SV0Jrw8",
+        token: "pat_IyI5OSeu7bS4DnG1t57woF5qUJXFf6R7NR29cVWhY4rcKaWky04l2p5EMwUZ1vLO",
         sdkUrl: cnCozeSdkUrl
       },
       "7640787360229769216": {
-        token: "pat_DRk9HFN4nfqoWvtk7UM3ncPX4CQbxNxreRkh5e5MdvvPYzJ0CVLjONAoZ5flDn5X",
+        token: "pat_pqrxdFcbDCRIPjyGwOchZN2UTFi01ErYNretbMqpz5gpuL3I5t0GLLVt2AOWfLxN",
         sdkUrl: cnCozeSdkUrl
       },
       "7641060369112711202": {
-        token: "pat_H1UVxZzI9uPBPFNLGy0vLPfqPu72Y5SHo8azuK0gdBbQxGNw8IhqMTzD1SV0Jrw8",
+        token: "pat_IyI5OSeu7bS4DnG1t57woF5qUJXFf6R7NR29cVWhY4rcKaWky04l2p5EMwUZ1vLO",
         sdkUrl: cnCozeSdkUrl
       },
       "7641069643557240886": {
-        token: "pat_H1UVxZzI9uPBPFNLGy0vLPfqPu72Y5SHo8azuK0gdBbQxGNw8IhqMTzD1SV0Jrw8",
+        token: "pat_IyI5OSeu7bS4DnG1t57woF5qUJXFf6R7NR29cVWhY4rcKaWky04l2p5EMwUZ1vLO",
         sdkUrl: cnCozeSdkUrl
       }
     };
@@ -1525,6 +1585,26 @@
 
     applyTheme();
     setInterval(applyTheme, 60000);
-  </script>
+
+    const categoryButtons = document.querySelectorAll(".category-btn");
+    const agentCards = document.querySelectorAll(".agent-card");
+
+    categoryButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        categoryButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const category = btn.dataset.category;
+        agentCards.forEach((card) => {
+          if (category === "all" || card.dataset.category === category) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+      });
+    });
+  
+</script>
 </body>
 </html>
